@@ -1,5 +1,4 @@
 import { Admin } from 'src/admins/admin.entity';
-import { Login } from 'src/logins/login.entity';
 import { Medico } from 'src/medicos/medico.entity';
 import {
   Entity,
@@ -19,9 +18,6 @@ export class Hospital {
 
   @Column()
   public hospitalAdress: string;
-
-  @OneToMany(() => Login, (login) => login.hospitales)
-  public logins: Login[];
 
   @OneToOne(() => Admin, (admin) => admin.hospitales)
   public admins: Admin[];
