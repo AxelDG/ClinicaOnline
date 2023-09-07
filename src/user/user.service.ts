@@ -18,11 +18,15 @@ export class UserService {
     return await this.userRepository.findOne({ where: { email: userName } });
   }
 
+  findByEmailWithPassword(email: string) {
+    return this.userRepository.findOne({
+      where: { email },
+      select: ['id', 'name', 'email', 'password', 'role'],
+    });
+  }
+
   async create(createUserDto: CreateUserDto) {
-    const user = await this.userRepository.create(createUserDto);
-    await this.userRepository.save(user);
-    const { password, ...result } = user;
-    return result;
+    return this.userRepository.save(createUserDto)
   }
 
   async update(id: number, updateUserDto: UpdateUserDto) {

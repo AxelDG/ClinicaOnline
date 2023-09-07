@@ -8,6 +8,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from 'src/user/user.entity';
 import { JwtStrategy } from './strategies/jwt-strategy';
 import { RefreshJwtStrategy } from './strategies/refreshToken.strategy';
+import { jwtConstants } from './constants/jwt.constant';
 
 @Module({
   providers: [AuthService, UserService, LocalStrategy, UserService, JwtStrategy, RefreshJwtStrategy],
@@ -15,7 +16,7 @@ import { RefreshJwtStrategy } from './strategies/refreshToken.strategy';
   imports: [
     TypeOrmModule.forFeature([User]),
     JwtModule.register({
-      secret: `${process.env.jwt_secret}`,
+      secret: jwtConstants.secret,
       signOptions: { expiresIn: '60s' },
       //Expira en un minuto
       //al pasar el minuto tendra que volverse a logear para acceder

@@ -1,8 +1,11 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable, UnauthorizedException } from '@nestjs/common';
 import { UserService } from 'src/user/user.service';
 import * as bcrypt from 'bcrypt';
+import * as bcryptjs from 'bcryptjs'
 import { JwtService } from '@nestjs/jwt';
 import { User } from 'src/user/user.entity';
+import { RegisterDto } from './dto/register.dto';
+import { LoginDto } from './dto/login.dto';
 
 @Injectable()
 export class AuthService {
@@ -20,19 +23,42 @@ export class AuthService {
     return null;
   }
 
-  async login(user: User) {
-    const payload = {
-      username: user.email,
-      sub: {
-        name: user.name,
-      },
-    };
+  async register({ name, email, password }: RegisterDto) {
+    const user = await this.userService.findOneWithUserName(name);
+
+    if (user) {
+      throw new BadRequestException('User already exists');
+    }
+
+    await this.userService.create({
+      name,
+      email,
+      password: await bcrypt.hash(password, 10),
+    });
+
     return {
-      ...user,
-      accessToken: this.jwtService.sign(payload),
-      // Expira en 1 minuto
-      refreshToken: this.jwtService.sign(payload, {expiresIn: '7d'})
-      // Expira en 7 dias
+      name,
+      email,
+    };
+  }
+
+  async login({ email, password }: LoginDto) {
+    const user = await this.userService.findByEmailWithPassword(email);
+    if (!user) {
+      throw new UnauthorizedException('Email is wrong');
+    }
+
+    const isPasswordValid = await bcryptjs.compare(password, user.password);
+    if (!isPasswordValid) {
+      throw new UnauthorizedException('Password is wrong');
+    }
+
+    const payload = { email: user.email, role: user.role };
+    const token = await this.jwtService.signAsync(payload);
+
+    return {
+      email,
+      token,
     };
   }
 
