@@ -12,6 +12,9 @@ export class Rol {
   @Column()
   public usuario: boolean;
 
+  @Column()
+  public medico: boolean;
+
   @OneToOne(() => Login, (login) => login.roles)
   public logins: Login[];
 
