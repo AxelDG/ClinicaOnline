@@ -1,6 +1,7 @@
+import { Historia } from 'src/historias/historia.entity';
 import { Hospital } from 'src/hospitales/hospital.entity';
 import { Turno } from 'src/turnos/turno.entity';
-import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, JoinColumn, ManyToOne, OneToMany } from 'typeorm';
 
 @Entity('medicos')
 export class Medico {
@@ -19,9 +20,11 @@ export class Medico {
   @Column()
   public registrationNumber: string;
 
-  @OneToMany(() => Turno, (turno) => turno.medicos)
-  public turnos: Turno[];
+  @ManyToOne(() => Hospital, hospital => hospital.medicos)
+  @JoinColumn()
+  hospital: Hospital
 
-  @OneToMany(() => Hospital, (hospital) => hospital.medicos)
-  public hospitales: Hospital[];
+  @OneToMany(() => Turno, turno => turno.medico)
+  public turnos: Turno[]
+  
 }

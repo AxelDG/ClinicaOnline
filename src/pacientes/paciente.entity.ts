@@ -5,9 +5,8 @@ import {
   Entity,
   Column,
   PrimaryGeneratedColumn,
-  OneToOne,
-  ManyToOne,
   OneToMany,
+  OneToOne
 } from 'typeorm';
 
 @Entity('pacientes')
@@ -27,12 +26,12 @@ export class Paciente {
   @Column()
   public dni: number;
 
-  @OneToOne(() => Historia, (historia) => historia.pacientes)
-  public historias: Historia[];
+  @OneToMany(() => Turno, turno => turno.paciente)
+  public turnos: Turno[]
 
-  @ManyToOne(() => Plan, (plan) => plan.pacientes)
-  public planes: Plan[];
+  @OneToOne(() => Plan, plan => plan.paciente)
+  public plan: Plan
 
-  @OneToMany(() => Turno, (turno) => turno.pacientes)
-  public turnos: Turno[];
+  @OneToMany(() => Historia, historia => historia.paciente)
+  public historia: Historia[]
 }

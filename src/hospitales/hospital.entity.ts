@@ -19,9 +19,10 @@ export class Hospital {
   @Column()
   public hospitalAdress: string;
 
-  @OneToOne(() => Admin, (admin) => admin.hospitales)
-  public admins: Admin[];
+  @OneToMany(() => Medico, medico => medico.hospital)
+  public medicos: Medico[]
 
-  @OneToMany(() => Medico, (medico) => medico.hospitales)
-  public medicos: Medico[];
+  @OneToOne(() => Admin, admin => admin.hospital)
+  public admin: Admin
+  
 }

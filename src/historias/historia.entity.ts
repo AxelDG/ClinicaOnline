@@ -1,4 +1,5 @@
 import { Admin } from 'src/admins/admin.entity';
+import { Medico } from 'src/medicos/medico.entity';
 import { Paciente } from 'src/pacientes/paciente.entity';
 import {
   Entity,
@@ -6,6 +7,7 @@ import {
   PrimaryGeneratedColumn,
   OneToMany,
   OneToOne,
+  ManyToOne
 } from 'typeorm';
 
 @Entity('historias')
@@ -25,9 +27,10 @@ export class Historia {
   @Column()
   public treatment: string;
 
-  @OneToMany(() => Admin, (admin) => admin.historias)
-  public admins: Admin[];
+  @OneToOne(() => Paciente, paciente => paciente.historia)
+  public paciente: Paciente
 
-  @OneToOne(() => Paciente, (paciente) => paciente.historias)
-  public pacientes: Paciente[];
+  // ManyToMany(() => Medico, medico => medicos.historias)
+  // @JoinTable()
+  // public medicos: Medico[]
 }

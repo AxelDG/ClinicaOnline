@@ -16,9 +16,6 @@ export class Admin {
   @Column()
   public adminName: string;
 
-  @OneToMany(() => Historia, (historia) => historia.admins)
-  public historias: Historia[];
-
-  @OneToOne(() => Hospital, (hospital) => hospital.admins)
-  public hospitales: Hospital[];
+ @OneToOne(() => Hospital, hospital => hospital.admin)
+ public hospital: Hospital
 }
