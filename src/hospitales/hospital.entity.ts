@@ -1,3 +1,4 @@
+import { ApiProperty } from '@nestjs/swagger';
 import { Admin } from 'src/admins/admin.entity';
 import { Medico } from 'src/medicos/medico.entity';
 import {
@@ -10,12 +11,25 @@ import {
 
 @Entity('hospitales')
 export class Hospital {
+
+  @ApiProperty({
+    type: Number,
+    description: 'This is a required property'
+  })
   @PrimaryGeneratedColumn()
   public id: number;
 
+  @ApiProperty({
+    type: String,
+    description: 'This is a required property'
+  })
   @Column()
   public hospitalName: string;
 
+  @ApiProperty({
+    type: String,
+    description: 'This is a required property'
+  })
   @Column()
   public hospitalAdress: string;
 

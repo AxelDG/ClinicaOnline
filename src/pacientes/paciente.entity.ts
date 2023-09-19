@@ -32,6 +32,6 @@ export class Paciente {
   @OneToOne(() => Plan, plan => plan.paciente)
   public plan: Plan
 
-  @OneToMany(() => Historia, historia => historia.paciente)
-  public historia: Historia[]
+  @OneToOne(() => Historia, historia => historia.paciente)
+  public historia: Historia
 }

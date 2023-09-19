@@ -3,9 +3,11 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserModule } from './user/user.module';
-import { AuthController } from './auth/auth.controller';
-import { AuthService } from './auth/auth.service';
 import { AuthModule } from './auth/auth.module';
+import { HospitalesModule } from './hospitales/hospitales.module';
+import { MedicoModule } from './medicos/medicos.module';
+import { AdminsModule } from './admins/admins.module';
+import { HistoriasModule } from './historias/historias.module';
 
 @Module({
   imports: [
@@ -21,7 +23,11 @@ import { AuthModule } from './auth/auth.module';
     }),
     UserModule,
     AuthModule,
-  ],
+    HospitalesModule,
+    MedicoModule,
+    AdminsModule,
+    HistoriasModule
+    ],
   controllers: [AppController],
   providers: [AppService],
 })

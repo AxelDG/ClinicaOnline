@@ -20,11 +20,17 @@ export class Medico {
   @Column()
   public registrationNumber: string;
 
+  @Column()
+  public hospitalId: number;
+
   @ManyToOne(() => Hospital, hospital => hospital.medicos)
-  @JoinColumn()
+  @JoinColumn({name: "hospitalId"})
   hospital: Hospital
 
   @OneToMany(() => Turno, turno => turno.medico)
   public turnos: Turno[]
+
+  // ManyToMany(() => Historia, historia => historias.medicos)
+  // public historias: Historia[]
   
 }

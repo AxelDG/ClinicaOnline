@@ -12,7 +12,9 @@ import { HospitalesService } from './hospitales.service';
 import { Hospital } from './hospital.entity';
 import { UpdateHospitalDto } from './dto/update-hospitales.dto';
 import { CreateHospitalDto } from './dto/create-hospitales.dto';
+import { ApiTags } from '@nestjs/swagger';
 
+// @ApiTags('hospitales')
 @Controller('hospitales')
 export class HospitalesController {
   constructor(private readonly hospitalesService: HospitalesService) {}
@@ -28,8 +30,8 @@ export class HospitalesController {
   }
 
   @Post()
-  createHospital(@Body() newHospital: CreateHospitalDto) {
-    return this.hospitalesService.createHospital(newHospital);
+  async createHospital(@Body() newHospital: CreateHospitalDto) {
+    return await this.hospitalesService.createHospital(newHospital);
   }
 
   @Delete(':id')
