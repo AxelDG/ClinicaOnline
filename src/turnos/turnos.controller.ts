@@ -12,7 +12,9 @@ import { Turno } from './turno.entity';
 import { CreateTurnoDto } from './dto/create-turno.dto';
 import { UpdateTurnoDto } from './dto/update-turno.dto';
 import { TurnosService } from './turnos.service';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('turnos')
 @Controller('turnos')
 export class TurnosController {
   constructor(private readonly turnosService: TurnosService) {}

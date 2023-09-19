@@ -8,6 +8,9 @@ import { HospitalesModule } from './hospitales/hospitales.module';
 import { MedicoModule } from './medicos/medicos.module';
 import { AdminsModule } from './admins/admins.module';
 import { HistoriasModule } from './historias/historias.module';
+import { PacientesModule } from './pacientes/pacientes.module';
+import { TurnosModule } from './turnos/turnos.module';
+import { PlanesModule } from './planes/planes.module';
 
 @Module({
   imports: [
@@ -26,7 +29,10 @@ import { HistoriasModule } from './historias/historias.module';
     HospitalesModule,
     MedicoModule,
     AdminsModule,
-    HistoriasModule
+    HistoriasModule,
+    PacientesModule,
+    TurnosModule,
+    PlanesModule
     ],
   controllers: [AppController],
   providers: [AppService],

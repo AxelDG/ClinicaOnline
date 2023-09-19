@@ -12,7 +12,9 @@ import { AdminsService } from './admins.service';
 import { Admin } from './admin.entity';
 import { CreateAdminDto } from './dto/create-admins.dto';
 import { UpdateAdminDto } from './dto/update-admins.dto';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('admins')
 @Controller('admins')
 export class AdminsController {
   constructor(private readonly adminsService: AdminsService) {}

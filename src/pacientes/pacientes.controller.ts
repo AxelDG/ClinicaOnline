@@ -12,7 +12,9 @@ import { Paciente } from './paciente.entity';
 import { CreatePacienteDto } from './dto/create-pacientes.dto';
 import { UpdatePacienteDto } from './dto/update-pacientes.dto';
 import { PacientesService } from './pacientes.service';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('pacientes')
 @Controller('pacientes')
 export class PacientesController {
   constructor(private readonly pacientesService: PacientesService) {}

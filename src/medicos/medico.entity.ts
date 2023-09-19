@@ -1,7 +1,8 @@
 import { Historia } from 'src/historias/historia.entity';
 import { Hospital } from 'src/hospitales/hospital.entity';
+import { Paciente } from 'src/pacientes/paciente.entity';
 import { Turno } from 'src/turnos/turno.entity';
-import { Entity, Column, PrimaryGeneratedColumn, JoinColumn, ManyToOne, OneToMany } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, JoinColumn, JoinTable, ManyToOne, OneToMany, ManyToMany } from 'typeorm';
 
 @Entity('medicos')
 export class Medico {
@@ -18,10 +19,17 @@ export class Medico {
   public specialty: string;
 
   @Column()
-  public registrationNumber: string;
+  public registrationNumber: number;
 
   @Column()
   public hospitalId: number;
+
+  // @ManyToMany(() => Paciente)
+  // @JoinTable()
+  // pacientes: Paciente[]
+
+  // ManyToMany(() => Historia, historia => historias.medicos)
+  // public historias: Historia[]
 
   @ManyToOne(() => Hospital, hospital => hospital.medicos)
   @JoinColumn({name: "hospitalId"})
@@ -29,8 +37,5 @@ export class Medico {
 
   @OneToMany(() => Turno, turno => turno.medico)
   public turnos: Turno[]
-
-  // ManyToMany(() => Historia, historia => historias.medicos)
-  // public historias: Historia[]
   
 }

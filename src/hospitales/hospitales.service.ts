@@ -37,7 +37,7 @@ export class HospitalesService {
       where: {
         id,
       },
-      relations: [],
+      relations: ['medicos'],
     });
 
     if (!hospitalFound) {

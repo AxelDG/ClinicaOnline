@@ -28,7 +28,7 @@ export class MedicosService {
 
   getMedicos() {
     return this.medicoRepository.find({
-      relations: ['hospitales'],
+      relations: [],
     });
   }
 
@@ -37,7 +37,7 @@ export class MedicosService {
       where: {
         id,
       },
-      relations: ['hospitales'],
+      relations: [],
     });
 
     if (!medicoFound) {

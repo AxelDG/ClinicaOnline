@@ -1,10 +1,13 @@
-import { IsNumberString, IsString } from "@nestjs/class-validator";
+import { IsDateString, IsString } from "@nestjs/class-validator";
 
 export class CreateTurnoDto {
 
   @IsString()
-  schedule: string;
+  name: string;
 
-  @IsNumberString()
-  date: number;
+  @IsString()
+  lastName: string;
+
+  @IsDateString()
+  date: Date;
 }

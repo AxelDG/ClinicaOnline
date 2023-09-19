@@ -1,4 +1,5 @@
 import { Historia } from 'src/historias/historia.entity';
+import { Medico } from 'src/medicos/medico.entity';
 import { Plan } from 'src/planes/plan.entity';
 import { Turno } from 'src/turnos/turno.entity';
 import {
@@ -6,7 +7,9 @@ import {
   Column,
   PrimaryGeneratedColumn,
   OneToMany,
-  OneToOne
+  OneToOne,
+  ManyToMany,
+  JoinTable
 } from 'typeorm';
 
 @Entity('pacientes')
@@ -18,7 +21,7 @@ export class Paciente {
   public name: string;
 
   @Column()
-  public lastname: string;
+  public lastName: string;
 
   @Column({ type: 'date' })
   public birthdate: Date;
@@ -26,8 +29,12 @@ export class Paciente {
   @Column()
   public dni: number;
 
-  @OneToMany(() => Turno, turno => turno.paciente)
-  public turnos: Turno[]
+  // @ManyToMany(() => Medico)
+  // @JoinTable()
+  // medicos: Medico[]
+
+  // @ManyToMany(() => Turno)
+  // public turnos: Turno[]
 
   @OneToOne(() => Plan, plan => plan.paciente)
   public plan: Plan

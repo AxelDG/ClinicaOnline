@@ -12,7 +12,9 @@ import { HistoriasService } from './historias.service';
 import { Historia } from './historia.entity';
 import { CreateHistoriaDto } from './dto/create-historia.dto';
 import { UpdateHistoriaDto } from './dto/update-historia.dto';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('historias')
 @Controller('historias')
 export class HistoriasController {
   constructor(private readonly historiasService: HistoriasService) {}

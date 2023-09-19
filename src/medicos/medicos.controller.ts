@@ -12,7 +12,9 @@ import { MedicosService } from './medicos.service';
 import { Medico } from './medico.entity';
 import { CreateMedicoDto } from './dto/create-medicos.dto';
 import { UpdateMedicoDto } from './dto/update-medicos.dto';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('medicos')
 @Controller('medicos')
 export class MedicosController {
   constructor(private readonly medicosService: MedicosService) {}
