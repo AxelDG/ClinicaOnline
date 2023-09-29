@@ -22,7 +22,7 @@ export class Medico {
   @Column({unique: true})
   public registrationNumber: number;
 
-  @Column()
+  @Column({nullable: false})
   public hospitalId: number;
 
   @Column({nullable: false})

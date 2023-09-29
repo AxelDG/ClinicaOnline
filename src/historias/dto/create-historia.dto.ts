@@ -1,9 +1,6 @@
-import { IsString } from "@nestjs/class-validator";
+import { IsNumber, IsString } from "@nestjs/class-validator";
 
 export class CreateHistoriaDto {
-
-  @IsString()
-  patientName: string;
 
   @IsString()
   date: string;
@@ -13,4 +10,7 @@ export class CreateHistoriaDto {
 
   @IsString()
   treatment: string;
+
+  @IsNumber()
+  patientId: number;
 }

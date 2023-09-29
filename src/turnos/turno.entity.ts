@@ -13,7 +13,7 @@ export class Turno {
   @Column({nullable: false})
   public medicId: number;
 
-  @Column()
+  @Column({ type: 'date' })
   public date: Date;
 
   @ManyToOne(() => Medico, medico => medico.turnos)

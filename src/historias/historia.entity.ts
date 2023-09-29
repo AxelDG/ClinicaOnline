@@ -6,16 +6,14 @@ import {
   Column,
   PrimaryGeneratedColumn,
   OneToMany,
-  OneToOne
+  OneToOne,
+  JoinColumn
 } from 'typeorm';
 
 @Entity('historias')
 export class Historia {
   @PrimaryGeneratedColumn()
   public id: number;
-
-  @Column()
-  public patientName: string;
 
   @Column({ type: 'date' })
   public date: Date;
@@ -26,7 +24,11 @@ export class Historia {
   @Column()
   public treatment: string;
 
+  @Column({nullable: false})
+  public patientId: number;
+
   @OneToOne(() => Paciente, paciente => paciente.historia)
+  @JoinColumn({name: 'patientId'})
   public paciente: Paciente
 
   // ManyToMany(() => Medico, medico => medicos.historias)
