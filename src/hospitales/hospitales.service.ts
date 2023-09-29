@@ -56,7 +56,7 @@ export class HospitalesService {
     if (!hospitalFound) {
       return new HttpException('Hospital not found', HttpStatus.NOT_FOUND);
     }
-    return this.hospitalRepository.delete(hospitalFound);
+    return this.hospitalRepository.delete({id: hospitalFound.id});
   }
 
   async updateHospital(id: number, hospital: UpdateHospitalDto) {

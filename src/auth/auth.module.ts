@@ -11,7 +11,7 @@ import { RefreshJwtStrategy } from './strategies/refreshToken.strategy';
 import { jwtConstants } from './constants/jwt.constant';
 
 @Module({
-  providers: [AuthService, UserService, LocalStrategy, UserService, JwtStrategy, RefreshJwtStrategy],
+  providers: [AuthService, LocalStrategy, UserService, JwtStrategy, RefreshJwtStrategy],
   controllers: [AuthController],
   imports: [
     TypeOrmModule.forFeature([User]),

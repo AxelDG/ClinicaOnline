@@ -15,7 +15,7 @@ export class PlanesService {
   async createPlan(plan: CreatePlanDto) {
     const planFound = await this.planRepository.findOne({
       where: {
-        classic: plan.classic,
+        type: plan.type,
       },
     });
 
@@ -47,16 +47,13 @@ export class PlanesService {
   }
 
   async deletePlan(id: number) {
-    const planFound = await this.planRepository.findOne({
-      where: {
-        id,
-      },
-    });
-
+    const planFound = await this.planRepository.findOne({where: {
+      id
+    }});
     if (!planFound) {
       return new HttpException('Plan not found', HttpStatus.NOT_FOUND);
     }
-    return this.planRepository.delete(planFound);
+    return this.planRepository.delete({id: planFound.id});
   }
 
   async updatePlan(id: number, plan: UpdatePlanDto) {

@@ -56,7 +56,7 @@ export class AdminsService {
     if (!adminFound) {
       return new HttpException('Admin not found', HttpStatus.NOT_FOUND);
     }
-    return this.adminRepository.delete(adminFound);
+    return this.adminRepository.delete({ id: adminFound.id });
   }
 
   async updateAdmin(id: number, admin: UpdateAdminDto) {

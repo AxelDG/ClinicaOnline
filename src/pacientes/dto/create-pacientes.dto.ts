@@ -6,7 +6,7 @@ export class CreatePacienteDto {
   name: string;
 
   @IsString()
-  lastName: string;
+  lastname: string;
 
   @IsDateString()
   birthdate: Date;
@@ -15,5 +15,5 @@ export class CreatePacienteDto {
   dni: number; 
 
   @IsNumber()
-  medicId: number;
+  userId: number;
 }

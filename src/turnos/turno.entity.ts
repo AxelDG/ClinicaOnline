@@ -1,20 +1,17 @@
 import { Medico } from 'src/medicos/medico.entity';
 import { Paciente } from 'src/pacientes/paciente.entity';
-import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, ManyToMany } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, ManyToOne} from 'typeorm';
 
 @Entity('turnos')
 export class Turno {
   @PrimaryGeneratedColumn()
   public id: number;
 
-  @Column()
-  public name: string;
+  @Column({nullable: false})
+  public patientId: number;
 
-  @Column()
-  public lastName: string;
-
-  //COMO PODRIAMOS USAR DATETIME EN TYPEORM?
-  // POR AHORA USAMOS DIA PERO HAY QUE PONER HORA TMB
+  @Column({nullable: false})
+  public medicId: number;
 
   @Column()
   public date: Date;
@@ -22,7 +19,7 @@ export class Turno {
   @ManyToOne(() => Medico, medico => medico.turnos)
   public medico: Medico
 
-  // @ManyToMany(() => Paciente)
-  // public turnos: Paciente[]
+  @ManyToOne(() => Paciente, paciente => paciente.turnos)
+  public paciente: Paciente;
 
 }

@@ -16,4 +16,7 @@ export class UpdateMedicoDto {
 
   @IsNumber()
   hospitalId?: number;
+
+  @IsNumber()
+  userId?: number;
 }

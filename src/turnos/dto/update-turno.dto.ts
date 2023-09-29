@@ -1,10 +1,13 @@
-import { IsString } from "@nestjs/class-validator";
+import { IsDateString, IsNumber } from "@nestjs/class-validator";
 
 export class UpdateTurnoDto {
 
-  @IsString()
-  schedule: string;
+  @IsNumber()
+  medicId?: number;
 
-  @IsString()
-  date: string;
+  @IsNumber()
+  patientId?: number;
+
+  @IsDateString()
+  date?: Date;
 }

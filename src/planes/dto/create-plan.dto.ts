@@ -7,8 +7,5 @@ export class CreatePlanDto {
   // PENSAMOS EN HACER UN DTO PARA CADA UNO
 
   @IsString()
-  classic: string;
-
-  @IsString()
-  family: string;
+  type: string;
 }

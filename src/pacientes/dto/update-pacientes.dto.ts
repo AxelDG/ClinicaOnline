@@ -13,4 +13,7 @@ export class UpdatePacienteDto {
 
   @IsNumber()
   dni?: number; 
+
+  @IsNumber()
+  userId?: number;
 }

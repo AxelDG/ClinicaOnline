@@ -6,8 +6,7 @@ import {
   Column,
   PrimaryGeneratedColumn,
   OneToMany,
-  OneToOne,
-  ManyToOne
+  OneToOne
 } from 'typeorm';
 
 @Entity('historias')

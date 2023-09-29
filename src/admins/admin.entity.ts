@@ -1,11 +1,13 @@
-import { Historia } from 'src/historias/historia.entity';
 import { Hospital } from 'src/hospitales/hospital.entity';
+import { User } from 'src/user/user.entity';
 import {
   Entity,
   Column,
   PrimaryGeneratedColumn,
   OneToMany,
   OneToOne,
+  ManyToOne,
+  JoinColumn,
 } from 'typeorm';
 
 @Entity('admins')
@@ -16,6 +18,13 @@ export class Admin {
   @Column()
   public adminName: string;
 
- @OneToOne(() => Hospital, hospital => hospital.admin)
- public hospital: Hospital
+  @Column({nullable: false})
+  public userId: number;
+
+  @OneToOne(() => Hospital, (hospital) => hospital.admin)
+  public hospital: Hospital;
+
+  @ManyToOne(() => User, (usuario) => usuario.admins)
+  @JoinColumn({name: 'userId'})
+  public usuario: User;
 }

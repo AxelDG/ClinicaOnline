@@ -2,36 +2,32 @@ import { Historia } from 'src/historias/historia.entity';
 import { Medico } from 'src/medicos/medico.entity';
 import { Plan } from 'src/planes/plan.entity';
 import { Turno } from 'src/turnos/turno.entity';
-import {
-  Entity,
-  Column,
-  PrimaryGeneratedColumn,
-  OneToMany,
-  OneToOne,
-  ManyToMany,
-  JoinTable
-} from 'typeorm';
+import { User } from 'src/user/user.entity';
+import { Column, Entity, JoinColumn, JoinTable, ManyToMany, ManyToOne, OneToMany, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity('pacientes')
-export class Paciente {
+export class Paciente{
   @PrimaryGeneratedColumn()
   public id: number;
 
   @Column()
-  public name: string;
+  public patientName: string;
 
   @Column()
-  public lastName: string;
+  public patientLastname: string;
 
   @Column({ type: 'date' })
   public birthdate: Date;
 
-  @Column()
+  @Column({unique: true})
   public dni: number;
 
-  // @ManyToMany(() => Medico)
-  // @JoinTable()
-  // medicos: Medico[]
+  @Column({nullable: false})
+  public userId: number;
+
+  @ManyToMany(() => Medico, medico => medico.pacientes)
+  @JoinTable()
+  medicos: Medico[]
 
   // @ManyToMany(() => Turno)
   // public turnos: Turno[]
@@ -41,4 +37,11 @@ export class Paciente {
 
   @OneToOne(() => Historia, historia => historia.paciente)
   public historia: Historia
+
+  @ManyToOne(() => User, usuario => usuario.pacientes)
+  @JoinColumn({name: 'userId'})
+  public usuario: User
+
+  @OneToMany(() => Turno, turno => turno.paciente)
+  public turnos: Turno[]
 }

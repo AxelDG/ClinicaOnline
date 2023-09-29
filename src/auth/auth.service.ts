@@ -1,4 +1,4 @@
-import { BadRequestException, Injectable, UnauthorizedException } from '@nestjs/common';
+import { BadRequestException, HttpException, HttpStatus, Injectable, UnauthorizedException } from '@nestjs/common';
 import { UserService } from 'src/user/user.service';
 import * as bcrypt from 'bcrypt';
 import * as bcryptjs from 'bcryptjs'
@@ -6,12 +6,15 @@ import { JwtService } from '@nestjs/jwt';
 import { User } from 'src/user/user.entity';
 import { RegisterDto } from './dto/register.dto';
 import { LoginDto } from './dto/login.dto';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class AuthService {
   constructor(
     private readonly userService: UserService,
     private jwtService: JwtService,
+    @InjectRepository(User) private readonly userRepository: Repository<User>
   ) {}
 
   async validateUser(username: string, password: string) {
@@ -72,5 +75,19 @@ export class AuthService {
     return {
       accessToken: this.jwtService.sign(payload),
     };
+  }
+
+  async deleteUser(id: number) {
+    const userFound = await this.userRepository.findOne({
+      where: {
+        id
+      }
+    })
+
+    if (!userFound) {
+      return new HttpException('User not found', HttpStatus.NOT_FOUND)
+    }
+
+    return this.userRepository.delete({id: userFound.id})
   }
 }
