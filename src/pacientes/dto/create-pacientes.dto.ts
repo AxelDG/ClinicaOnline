@@ -3,10 +3,10 @@ import { IsDateString, IsNumber, IsString } from "@nestjs/class-validator";
 export class CreatePacienteDto {
 
   @IsString()
-  name: string;
+  patientName: string;
 
   @IsString()
-  lastname: string;
+  patientLastname: string;
 
   @IsDateString()
   birthdate: Date;
@@ -16,4 +16,7 @@ export class CreatePacienteDto {
 
   @IsNumber()
   userId: number;
+
+  @IsNumber()
+  planId: number;
 }

@@ -25,14 +25,15 @@ export class Paciente{
   @Column({nullable: false})
   public userId: number;
 
+  @Column({nullable: false})
+  public planId: number;
+
   @ManyToMany(() => Medico, medico => medico.pacientes)
   @JoinTable()
   medicos: Medico[]
 
-  // @ManyToMany(() => Turno)
-  // public turnos: Turno[]
-
-  @OneToOne(() => Plan, plan => plan.paciente)
+  @OneToOne(() => Plan, plan => plan.paciente, {eager: true})
+  @JoinColumn({name: 'planId'})
   public plan: Plan
 
   @OneToOne(() => Historia, historia => historia.paciente)

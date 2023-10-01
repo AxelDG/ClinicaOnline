@@ -1,12 +1,15 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Admin } from 'src/admins/admin.entity';
 import { Medico } from 'src/medicos/medico.entity';
+import { Plan } from 'src/planes/plan.entity';
 import {
   Entity,
   Column,
   PrimaryGeneratedColumn,
   OneToMany,
   OneToOne,
+  JoinTable,
+  ManyToMany,
 } from 'typeorm';
 
 @Entity('hospitales')
@@ -37,6 +40,10 @@ export class Hospital {
   public medicos: Medico[]
 
   @OneToOne(() => Admin, admin => admin.hospital)
-  public admin: Admin
+  public admin: Admin;
+
+  @ManyToMany(() => Plan, plan => plan.hospitales)
+  @JoinTable()
+  planes: Plan[]
   
 }

@@ -29,14 +29,14 @@ export class Medico {
   public userId: number;
 
   @ManyToMany(() => Paciente, paciente => paciente.medicos)
-  pacientes: Paciente[]
+  public pacientes: Paciente[]
 
-  // ManyToMany(() => Historia, historia => historias.medicos)
-  // public historias: Historia[]
+  @ManyToMany(() => Historia, historia => historia.medicos)
+  public historias: Historia[]
 
   @ManyToOne(() => Hospital, hospital => hospital.medicos, {nullable: false})
   @JoinColumn({name: "hospitalId"})
-  hospital: Hospital
+  public hospital: Hospital
 
   @OneToMany(() => Turno, turno => turno.medico)
   public turnos: Turno[]

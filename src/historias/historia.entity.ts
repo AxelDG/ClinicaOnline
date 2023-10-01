@@ -7,7 +7,9 @@ import {
   PrimaryGeneratedColumn,
   OneToMany,
   OneToOne,
-  JoinColumn
+  JoinColumn,
+  ManyToMany,
+  JoinTable
 } from 'typeorm';
 
 @Entity('historias')
@@ -31,7 +33,7 @@ export class Historia {
   @JoinColumn({name: 'patientId'})
   public paciente: Paciente
 
-  // ManyToMany(() => Medico, medico => medicos.historias)
-  // @JoinTable()
-  // public medicos: Medico[]
+  @ManyToMany(() => Medico, medico => medico.historias)
+  @JoinTable()
+  public medicos: Medico[]
 }

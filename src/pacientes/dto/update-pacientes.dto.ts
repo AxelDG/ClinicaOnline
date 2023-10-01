@@ -16,4 +16,7 @@ export class UpdatePacienteDto {
 
   @IsNumber()
   userId?: number;
+
+  @IsNumber()
+  planId?: number;
 }

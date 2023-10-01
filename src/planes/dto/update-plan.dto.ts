@@ -1,10 +1,10 @@
-import { IsString } from "@nestjs/class-validator";
+import { IsNumber, IsString } from "@nestjs/class-validator";
 
 export class UpdatePlanDto {
 
   @IsString()
-  classic?: string;
+  type?: string;
 
-  @IsString()
-  family?: string;
+  @IsNumber()
+  price?: number;
 }
