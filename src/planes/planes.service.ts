@@ -1,15 +1,20 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { Repository, DataSource } from 'typeorm';
 import { CreatePlanDto } from './dto/create-plan.dto';
 import { Plan } from './plan.entity';
 import { UpdatePlanDto } from './dto/update-plan.dto';
+import { Hospital } from 'src/hospitales/hospital.entity';
 
 @Injectable()
 export class PlanesService {
   constructor(
+    private readonly dataSource: DataSource,
     @InjectRepository(Plan)
     private planRepository: Repository<Plan>,
+
+    @InjectRepository(Hospital)
+    private hospitalRepository: Repository<Hospital>
   ) {}
 
   async createPlan(plan: CreatePlanDto) {
@@ -23,7 +28,29 @@ export class PlanesService {
       return new HttpException('Plan already exist', HttpStatus.CONFLICT);
     }
     const newPlan = this.planRepository.create(plan);
-    return this.planRepository.save(newPlan);
+    await this.planRepository.save(newPlan);
+    await this.addPlanToHospital(newPlan.id, newPlan.hospitalId)
+  }
+
+  async addPlanToHospital(plan: number, hospital: number) {
+    const planFound = await this.planRepository.findOne({where: {
+      id: plan
+    }})
+
+    const hospitalFound = await this.hospitalRepository.findOne({where: {
+      id: hospital
+    }})
+
+    if (!planFound || !hospitalFound) {
+      return new HttpException("Plan or hospital don't exist", HttpStatus.NOT_FOUND)
+    }
+
+    await this.dataSource
+      .createQueryBuilder()
+      .insert()
+      .into('hospitales_planes_planes')
+      .values({ hospitalesId: hospitalFound.id, planesId: planFound.id })
+      .execute();
   }
 
   getPlanes() {

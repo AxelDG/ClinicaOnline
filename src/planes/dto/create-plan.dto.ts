@@ -7,4 +7,7 @@ export class CreatePlanDto {
 
   @IsNumber()
   price: number;
+
+  @IsNumber()
+  hospitalId: number;
 }
