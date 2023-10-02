@@ -1,10 +1,10 @@
+import { ApiProperty } from '@nestjs/swagger';
 import { Hospital } from 'src/hospitales/hospital.entity';
 import { User } from 'src/user/user.entity';
 import {
   Entity,
   Column,
   PrimaryGeneratedColumn,
-  OneToMany,
   OneToOne,
   ManyToOne,
   JoinColumn,
@@ -12,12 +12,25 @@ import {
 
 @Entity('admins')
 export class Admin {
+
+  @ApiProperty({
+    type: Number,
+    description: 'This is a required property'
+  })
   @PrimaryGeneratedColumn()
   public id: number;
 
+  @ApiProperty({
+    type: String,
+    description: 'This is a required property'
+  })
   @Column()
   public adminName: string;
 
+  @ApiProperty({
+    type: Number,
+    description: 'This is a required property'
+  })
   @Column({nullable: false})
   public userId: number;
 

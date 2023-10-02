@@ -3,10 +3,10 @@ import { IsDateString, IsNumber } from "@nestjs/class-validator";
 export class CreateTurnoDto {
 
   @IsNumber()
-  patientId: number;
+  medicId: number;
 
   @IsNumber()
-  medicId: number;
+  patientId: number;
 
   @IsDateString()
   date: Date;

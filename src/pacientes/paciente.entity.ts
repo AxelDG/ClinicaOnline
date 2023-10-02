@@ -1,3 +1,4 @@
+import { ApiProperty } from '@nestjs/swagger';
 import { Historia } from 'src/historias/historia.entity';
 import { Medico } from 'src/medicos/medico.entity';
 import { Plan } from 'src/planes/plan.entity';
@@ -7,24 +8,53 @@ import { Column, Entity, JoinColumn, JoinTable, ManyToMany, ManyToOne, OneToMany
 
 @Entity('pacientes')
 export class Paciente{
+
+  @ApiProperty({
+    type: Number,
+    description: 'This is a required property'
+  })
   @PrimaryGeneratedColumn()
   public id: number;
 
+  @ApiProperty({
+    type: String,
+    description: 'This is a required property'
+  })
   @Column()
   public patientName: string;
 
+  @ApiProperty({
+    type: String,
+    description: 'This is a required property'
+  })
   @Column()
   public patientLastname: string;
 
+  @ApiProperty({
+    type: Date,
+    description: 'This is a required property'
+  })
   @Column({ type: 'date' })
   public birthdate: Date;
 
-  @Column({unique: true})
+  @ApiProperty({
+    type: Number,
+    description: 'This is a required property'
+  })
+  @Column({unique: true, nullable: false})
   public dni: number;
 
+  @ApiProperty({
+    type: Number,
+    description: 'This is a required property'
+  })
   @Column({nullable: false})
   public userId: number;
 
+  @ApiProperty({
+    type: Number,
+    description: 'This is a required property'
+  })
   @Column({nullable: false})
   public planId: number;
 
@@ -32,7 +62,7 @@ export class Paciente{
   @JoinTable()
   medicos: Medico[]
 
-  @OneToOne(() => Plan, plan => plan.paciente, {eager: true})
+  @OneToOne(() => Plan, plan => plan.paciente)
   @JoinColumn({name: 'planId'})
   public plan: Plan
 

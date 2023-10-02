@@ -12,9 +12,9 @@ async function bootstrap() {
     }),
   );
   const config = new DocumentBuilder()
-    .setTitle('Demostracion API')
-    .setDescription('Backend Api Dorrego')
-    .setVersion('1.0')
+    .setTitle('Clinica Online')
+    .setDescription('Backend Clinica')
+    .setVersion('1.2')
     .build();
 
   const document = SwaggerModule.createDocument(app, config)

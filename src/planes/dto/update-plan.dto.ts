@@ -7,4 +7,7 @@ export class UpdatePlanDto {
 
   @IsNumber()
   price?: number;
+
+  @IsNumber()
+  hospitalId?: number;
 }

@@ -19,7 +19,7 @@ export class User {
   @Column({ nullable: false })
   password: string;
 
-  @Column({ type: 'enum', default: Role.user, enum: Role })
+  @Column({ type: 'enum', enum: Role })
   role: Role;
 
   @BeforeInsert()

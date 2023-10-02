@@ -1,3 +1,4 @@
+import { ApiProperty } from '@nestjs/swagger';
 import { Admin } from 'src/admins/admin.entity';
 import { Medico } from 'src/medicos/medico.entity';
 import { Paciente } from 'src/pacientes/paciente.entity';
@@ -14,18 +15,39 @@ import {
 
 @Entity('historias')
 export class Historia {
+
+  @ApiProperty({
+    type: Number,
+    description: 'This is a required property'
+  })
   @PrimaryGeneratedColumn()
   public id: number;
 
+  @ApiProperty({
+    type: Date,
+    description: 'This is a required property'
+  })
   @Column({ type: 'date' })
   public date: Date;
 
+  @ApiProperty({
+    type: String,
+    description: 'This is a required property'
+  })
   @Column()
   public symptoms: string;
 
+  @ApiProperty({
+    type: String,
+    description: 'This is a required property'
+  })
   @Column()
   public treatment: string;
 
+  @ApiProperty({
+    type: Number,
+    description: 'This is a required property'
+  })
   @Column({nullable: false})
   public patientId: number;
 

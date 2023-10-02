@@ -1,9 +1,9 @@
-import { IsNumber, IsString } from "@nestjs/class-validator";
+import { IsDateString, IsNumber, IsString } from "@nestjs/class-validator";
 
 export class UpdateHistoriaDto {
 
-  @IsString()
-  date?: string;
+  @IsDateString()
+  date?: Date;
 
   @IsString()
   symptoms?: string;
