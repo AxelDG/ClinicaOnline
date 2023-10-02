@@ -39,8 +39,8 @@ export class Hospital {
   @OneToMany(() => Medico, medico => medico.hospital)
   public medicos: Medico[]
 
-  @OneToOne(() => Admin, admin => admin.hospital)
-  public admin: Admin;
+  @OneToOne(() => Admin, admins => admins.hospital, {eager: true})
+  public admins: Admin;
 
   @ManyToMany(() => Plan, plan => plan.hospitales)
   @JoinTable()

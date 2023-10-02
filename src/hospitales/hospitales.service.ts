@@ -27,17 +27,15 @@ export class HospitalesService {
   }
 
   getHospitales() {
-    return this.hospitalRepository.find({
-      relations: [],
-    });
+    return this.hospitalRepository.find(
+    );
   }
 
   async getHospital(id: number) {
     const hospitalFound = await this.hospitalRepository.findOne({
       where: {
         id,
-      },
-      relations: ['medicos'],
+      }
     });
 
     if (!hospitalFound) {

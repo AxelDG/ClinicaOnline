@@ -6,4 +6,7 @@ export class CreateAdminDto {
 
   @IsNumber()
   userId: number;
+
+  @IsNumber()
+  hospitalId: number;
 }

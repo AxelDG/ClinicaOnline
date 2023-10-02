@@ -5,5 +5,8 @@ export class UpdateAdminDto {
   adminName?: string;
 
   @IsNumber()
-  userId: number;
+  userId?: number;
+
+  @IsNumber()
+  hospitalId?: number;
 }

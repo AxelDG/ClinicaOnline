@@ -34,7 +34,15 @@ export class Admin {
   @Column({nullable: false})
   public userId: number;
 
-  @OneToOne(() => Hospital, (hospital) => hospital.admin)
+  @ApiProperty({
+    type: Number,
+    description: 'This is a required property'
+  })
+  @Column()
+  public hospitalId: number;  
+
+  @OneToOne(() => Hospital, (hospital) => hospital.admins)
+  @JoinColumn({name: 'hospitalId'})
   public hospital: Hospital;
 
   @ManyToOne(() => User, (usuario) => usuario.admins)
