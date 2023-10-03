@@ -17,12 +17,12 @@ import { Role } from 'src/common/enums/rol.enum';
 import { Auth } from 'src/auth/decorators/auth.decorator';
 
 @ApiTags('medicos')
+@Auth(Role.admin)
 @Controller('medicos')
 export class MedicosController {
   constructor(private readonly medicosService: MedicosService) {}
   
   @Get()
-  @Auth(Role.patient)
   getMedicos(): Promise<Medico[]> {
     return this.medicosService.getMedicos();
   }

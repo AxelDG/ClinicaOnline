@@ -13,8 +13,11 @@ import { CreatePacienteDto } from './dto/create-pacientes.dto';
 import { UpdatePacienteDto } from './dto/update-pacientes.dto';
 import { PacientesService } from './pacientes.service';
 import { ApiTags } from '@nestjs/swagger';
+import { Role } from 'src/common/enums/rol.enum';
+import { Auth } from 'src/auth/decorators/auth.decorator';
 
 @ApiTags('pacientes')
+@Auth(Role.medic)
 @Controller('pacientes')
 export class PacientesController {
   constructor(private readonly pacientesService: PacientesService) {}

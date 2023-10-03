@@ -7,6 +7,8 @@ import { ApiTags } from '@nestjs/swagger';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from 'src/user/user.entity';
 import { Repository } from 'typeorm';
+import { Auth } from './decorators/auth.decorator';
+import { Role } from 'src/common/enums/rol.enum';
 
 @ApiTags('auth')
 @Controller('auth')
@@ -39,15 +41,10 @@ export class AuthController {
   }
 
   @Delete(':id')
+  @Auth(Role.admin)
   async deleteUser(@Param('id', ParseIntPipe) id: number) {
     return await this.authService.deleteUser(id)
   }
-
-
-  // @Delete(':id')
-  // deleteHistoria(@Param('id', ParseIntPipe) id: number) {
-  //   return this.historiasService.deleteHistoria(id);
-  // }
 
 
   @UseGuards(RefreshJwtGuard)

@@ -13,8 +13,11 @@ import { Admin } from './admin.entity';
 import { CreateAdminDto } from './dto/create-admins.dto';
 import { UpdateAdminDto } from './dto/update-admins.dto';
 import { ApiTags } from '@nestjs/swagger';
+import { Role } from 'src/common/enums/rol.enum';
+import { Auth } from 'src/auth/decorators/auth.decorator';
 
 @ApiTags('admins')
+@Auth(Role.admin)
 @Controller('admins')
 export class AdminsController {
   constructor(private readonly adminsService: AdminsService) {}

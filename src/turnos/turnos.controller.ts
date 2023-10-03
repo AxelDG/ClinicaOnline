@@ -17,12 +17,12 @@ import { Auth } from 'src/auth/decorators/auth.decorator';
 import { Role } from 'src/common/enums/rol.enum';
 
 @ApiTags('turnos')
-@Auth(Role.patient)
 @Controller('turnos')
 export class TurnosController {
   constructor(private readonly turnosService: TurnosService) {}
 
   @Get()
+  @Auth(Role.medic)
   getTurnos(): Promise<Turno[]> {
     return this.turnosService.getTurnos();
   }
@@ -33,6 +33,7 @@ export class TurnosController {
   }
 
   @Post()
+  @Auth(Role.patient)
   createTurno(@Body() newTurno: CreateTurnoDto) {
     return this.turnosService.createTurno(newTurno);
   }
@@ -43,6 +44,7 @@ export class TurnosController {
   }
 
   @Put(':id')
+  @Auth(Role.medic)
   updateTurno(
     @Param('id', ParseIntPipe) id: number,
     @Body()
