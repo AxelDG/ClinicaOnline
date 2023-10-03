@@ -6,10 +6,12 @@ import { Medico } from './medico.entity';
 import { Hospital } from 'src/hospitales/hospital.entity';
 import { User } from 'src/user/user.entity';
 import { Paciente } from 'src/pacientes/paciente.entity';
+import { JwtService } from '@nestjs/jwt';
+import { AuthGuard } from 'src/auth/guards/auth.guard';
 
 @Module({
   imports: [TypeOrmModule.forFeature([Medico, Hospital, User, Paciente])],
   controllers: [MedicosController],
-  providers: [MedicosService],
+  providers: [MedicosService, JwtService, AuthGuard],
 })
 export class MedicoModule {}

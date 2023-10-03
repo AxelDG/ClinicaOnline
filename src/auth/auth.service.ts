@@ -8,6 +8,7 @@ import { RegisterDto } from './dto/register.dto';
 import { LoginDto } from './dto/login.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { Role } from 'src/common/enums/rol.enum';
 
 @Injectable()
 export class AuthService {
@@ -26,8 +27,8 @@ export class AuthService {
     return null;
   }
 
-  async register({ name, email, password }: RegisterDto) {
-    const user = await this.userService.findOneWithUserName(name);
+  async registerPatient({ name, email, password }: RegisterDto) {
+    const user = await this.userService.findOneWithUserName(email);
 
     if (user) {
       throw new BadRequestException('User already exists');
@@ -37,6 +38,7 @@ export class AuthService {
       name,
       email,
       password: await bcrypt.hash(password, 10),
+      role: Role.patient
     });
 
     return {
@@ -44,6 +46,44 @@ export class AuthService {
       email,
     };
   }
+
+  async registerMedic({ name, email, password }: RegisterDto) {
+    const user = await this.userService.findOneWithUserName(email);
+
+    if (user) {
+      throw new BadRequestException('User already exists');
+    }
+
+    await this.userService.create({
+      name,
+      email,
+      password: await bcrypt.hash(password, 10),
+      role: Role.medic
+    });
+
+    return {
+      name,
+      email,
+    };
+  }
+  // async register({ name, email, password }: RegisterDto) {
+  //   const user = await this.userService.findOneWithUserName(name);
+
+  //   if (user) {
+  //     throw new BadRequestException('User already exists');
+  //   }
+
+  //   await this.userService.create({
+  //     name,
+  //     email,
+  //     password: await bcrypt.hash(password, 10),
+  //   });
+
+  //   return {
+  //     name,
+  //     email,
+  //   };
+  // }
 
   async login({ email, password }: LoginDto) {
     const user = await this.userService.findByEmailWithPassword(email);

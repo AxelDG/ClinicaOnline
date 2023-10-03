@@ -13,13 +13,16 @@ import { Medico } from './medico.entity';
 import { CreateMedicoDto } from './dto/create-medicos.dto';
 import { UpdateMedicoDto } from './dto/update-medicos.dto';
 import { ApiTags } from '@nestjs/swagger';
+import { Role } from 'src/common/enums/rol.enum';
+import { Auth } from 'src/auth/decorators/auth.decorator';
 
 @ApiTags('medicos')
 @Controller('medicos')
 export class MedicosController {
   constructor(private readonly medicosService: MedicosService) {}
-
+  
   @Get()
+  @Auth(Role.patient)
   getMedicos(): Promise<Medico[]> {
     return this.medicosService.getMedicos();
   }

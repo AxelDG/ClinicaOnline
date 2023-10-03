@@ -38,7 +38,7 @@ export class Admin {
     type: Number,
     description: 'This is a required property'
   })
-  @Column()
+  @Column({nullable: false})
   public hospitalId: number;  
 
   @OneToOne(() => Hospital, (hospital) => hospital.admins)

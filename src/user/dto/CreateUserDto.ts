@@ -1,5 +1,6 @@
 import { IsEmail, IsString } from "@nestjs/class-validator";
 import { PartialType } from "@nestjs/mapped-types";
+import { Role } from "src/common/enums/rol.enum";
 
 export class CreateUserDto {
 
@@ -11,6 +12,9 @@ export class CreateUserDto {
 
   @IsString()
   password: string;
+
+  @IsString()
+  role?: Role;
 }
 
 
