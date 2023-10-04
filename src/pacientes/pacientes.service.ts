@@ -15,7 +15,7 @@ export class PacientesService {
   async createPaciente(paciente: CreatePacienteDto) {
     const userFound = await this.pacienteRepository.findOne({
       where: {
-        id: paciente.userId
+        patientName: paciente.patientName
       },
     });
 

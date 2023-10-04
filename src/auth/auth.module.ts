@@ -9,12 +9,16 @@ import { User } from 'src/user/user.entity';
 import { JwtStrategy } from './strategies/jwt-strategy';
 import { RefreshJwtStrategy } from './strategies/refreshToken.strategy';
 import { jwtConstants } from './constants/jwt.constant';
+import { Paciente } from 'src/pacientes/paciente.entity';
+import { PacientesService } from 'src/pacientes/pacientes.service';
+import { Medico } from 'src/medicos/medico.entity';
+import { MedicosService } from 'src/medicos/medicos.service';
 
 @Module({
-  providers: [AuthService, LocalStrategy, UserService, JwtStrategy, RefreshJwtStrategy],
+  providers: [AuthService, LocalStrategy, UserService, JwtStrategy, RefreshJwtStrategy, PacientesService, MedicosService],
   controllers: [AuthController],
   imports: [
-    TypeOrmModule.forFeature([User]),
+    TypeOrmModule.forFeature([User, Paciente, Medico]),
     JwtModule.register({
       secret: jwtConstants.secret,
       signOptions: { expiresIn: '60s' },

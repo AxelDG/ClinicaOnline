@@ -39,7 +39,7 @@ export class Hospital {
   @OneToMany(() => Medico, medico => medico.hospital)
   public medicos: Medico[]
 
-  @OneToOne(() => Admin, admins => admins.hospital, {eager: true})
+  @OneToOne(() => Admin, admins => admins.hospital)
   public admins: Admin;
 
   @ManyToMany(() => Plan, plan => plan.hospitales)

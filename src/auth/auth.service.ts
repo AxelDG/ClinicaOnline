@@ -4,18 +4,27 @@ import * as bcrypt from 'bcrypt';
 import * as bcryptjs from 'bcryptjs'
 import { JwtService } from '@nestjs/jwt';
 import { User } from 'src/user/user.entity';
-import { RegisterDto } from './dto/register.dto';
+import { RegisterPatientDto } from './dto/registerPatient.dto';
 import { LoginDto } from './dto/login.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Role } from 'src/common/enums/rol.enum';
+import { PacientesService } from 'src/pacientes/pacientes.service';
+import { Paciente } from 'src/pacientes/paciente.entity';
+import { MedicosService } from 'src/medicos/medicos.service';
+import { Medico } from 'src/medicos/medico.entity';
+import { RegisterMedicDto } from './dto/registerMedic.dto';
 
 @Injectable()
 export class AuthService {
   constructor(
     private readonly userService: UserService,
     private jwtService: JwtService,
-    @InjectRepository(User) private readonly userRepository: Repository<User>
+    private pacienteService: PacientesService,
+    private medicoService: MedicosService,
+    @InjectRepository(User) private readonly userRepository: Repository<User>,
+    @InjectRepository(Paciente) private readonly pacienteRepository: Repository<Paciente>,
+    @InjectRepository(Medico) private readonly medicoRepository: Repository<Medico>,
   ) {}
 
   async validateUser(username: string, password: string) {
@@ -27,19 +36,28 @@ export class AuthService {
     return null;
   }
 
-  async registerPatient({ name, email, password }: RegisterDto) {
+  async registerPatient({ name, lastname, birthdate, dni, planId, email, password }: RegisterPatientDto) {
     const user = await this.userService.findOneWithUserName(email);
 
     if (user) {
       throw new BadRequestException('User already exists');
     }
 
-    await this.userService.create({
+    const patientUser = await this.userService.create({
       name,
       email,
       password: await bcrypt.hash(password, 10),
       role: Role.patient
-    });
+    })
+
+    await this.pacienteService.createPaciente({
+      patientName: name,
+      patientLastname: lastname,
+      birthdate: birthdate,
+      dni: dni,
+      planId: planId,
+      userId: patientUser.id
+    })
 
     return {
       name,
@@ -47,19 +65,28 @@ export class AuthService {
     };
   }
 
-  async registerMedic({ name, email, password }: RegisterDto) {
+  async registerMedic({ name, lastname, specialty, registrationNumber, email, password }: RegisterMedicDto) {
     const user = await this.userService.findOneWithUserName(email);
 
     if (user) {
       throw new BadRequestException('User already exists');
     }
 
-    await this.userService.create({
+    const medicUser = await this.userService.create({
       name,
       email,
       password: await bcrypt.hash(password, 10),
       role: Role.medic
     });
+
+    await this.medicoService.createMedico({
+      medicName: name,
+      medicLastname: lastname,
+      specialty: specialty,
+      registrationNumber: registrationNumber,
+      hospitalId: 1,
+      userId: medicUser.id
+    })
 
     return {
       name,

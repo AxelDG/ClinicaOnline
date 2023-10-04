@@ -30,6 +30,7 @@ export class PlanesService {
     const newPlan = this.planRepository.create(plan);
     await this.planRepository.save(newPlan);
     await this.addPlanToHospital(newPlan.id, newPlan.hospitalId)
+    return newPlan
   }
 
   async addPlanToHospital(plan: number, hospital: number) {
