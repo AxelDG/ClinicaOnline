@@ -1,7 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Medico } from 'src/medicos/medico.entity';
 import { Paciente } from 'src/pacientes/paciente.entity';
-import { Entity, Column, PrimaryGeneratedColumn, ManyToOne} from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, JoinColumn} from 'typeorm';
 
 @Entity('turnos')
 export class Turno {
@@ -34,10 +34,12 @@ export class Turno {
   @Column({ type: 'date' })
   public date: Date;
 
-  @ManyToOne(() => Medico, medico => medico.turnos)
+  @ManyToOne(() => Medico, medico => medico.turnos, {eager: true})
+  @JoinColumn({name: 'medicId'})
   public medico: Medico
 
-  @ManyToOne(() => Paciente, paciente => paciente.turnos)
+  @ManyToOne(() => Paciente, paciente => paciente.turnos, {eager: true})
+  @JoinColumn({name: 'patientId'})
   public paciente: Paciente;
 
 }

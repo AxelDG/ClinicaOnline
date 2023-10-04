@@ -22,7 +22,7 @@ export class TurnosController {
   constructor(private readonly turnosService: TurnosService) {}
 
   @Get()
-  @Auth(Role.medic)
+  // @Auth(Role.medic)
   getTurnos(): Promise<Turno[]> {
     return this.turnosService.getTurnos();
   }
@@ -33,7 +33,7 @@ export class TurnosController {
   }
 
   @Post()
-  @Auth(Role.patient)
+  // @Auth(Role.patient)
   createTurno(@Body() newTurno: CreateTurnoDto) {
     return this.turnosService.createTurno(newTurno);
   }
