@@ -66,7 +66,7 @@ export class Paciente{
   @JoinColumn({name: 'planId'})
   public plan: Plan
 
-  @OneToOne(() => Historia, historia => historia.paciente)
+  @OneToOne(() => Historia, historia => historia.paciente, {eager: true})
   public historia: Historia
 
   @ManyToOne(() => User, usuario => usuario.pacientes)

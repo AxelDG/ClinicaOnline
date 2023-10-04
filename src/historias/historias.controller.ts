@@ -28,16 +28,19 @@ export class HistoriasController {
   }
 
   @Get(':id')
+  @Auth(Role.medic)
   getHistoria(@Param('id', ParseIntPipe) id: number) {
     return this.historiasService.getHistoria(id);
   }
 
   @Post()
+  @Auth(Role.medic)
   createHistoia(@Body() newHistoria: CreateHistoriaDto) {
     return this.historiasService.createHistoria(newHistoria);
   }
 
   @Delete(':id')
+  @Auth(Role.admin)
   deleteHistoria(@Param('id', ParseIntPipe) id: number) {
     return this.historiasService.deleteHistoria(id);
   }

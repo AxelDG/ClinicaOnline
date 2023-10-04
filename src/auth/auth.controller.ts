@@ -10,6 +10,7 @@ import { Repository } from 'typeorm';
 import { Auth } from './decorators/auth.decorator';
 import { Role } from 'src/common/enums/rol.enum';
 import { RegisterMedicDto } from './dto/registerMedic.dto';
+import { RegisterAdminDto } from './dto/registerAdmin.dto';
 
 @ApiTags('auth')
 @Controller('auth')
@@ -22,6 +23,7 @@ export class AuthController {
   ) {}
 
   @Get('users')
+  @Auth(Role.admin)
   async findUsers() {
     return await this.userRepository.find();
   }
@@ -32,8 +34,15 @@ export class AuthController {
   }
 
   @Post('register/medic')
+  @Auth(Role.admin)
   async registerMedic(@Body() registerMedicDto: RegisterMedicDto) {
     return await this.authService.registerMedic(registerMedicDto);
+  }
+
+  @Post('register/admin')
+  @Auth(Role.superadmin)
+  async registerAdmin(@Body() registerAdminDto: RegisterAdminDto) {
+    return await this.authService.registerAdmin(registerAdminDto)
   }
 
   @Post('login')

@@ -1,10 +1,11 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { Specialty } from 'src/common/enums/specialty.enum';
 import { Historia } from 'src/historias/historia.entity';
 import { Hospital } from 'src/hospitales/hospital.entity';
 import { Paciente } from 'src/pacientes/paciente.entity';
 import { Turno } from 'src/turnos/turno.entity';
 import { User } from 'src/user/user.entity';
-import { Entity, Column, PrimaryGeneratedColumn, JoinColumn, JoinTable, ManyToOne, OneToMany, ManyToMany } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, JoinColumn, ManyToOne, OneToMany, ManyToMany } from 'typeorm';
 
 @Entity('medicos')
 export class Medico {
@@ -31,11 +32,11 @@ export class Medico {
   public medicLastname: string;
 
   @ApiProperty({
-    type: String,
+    type: Specialty,
     description: 'This is a required property'
   })
-  @Column()
-  public specialty: string;
+  @Column({ type: 'enum', enum: Specialty })
+  public specialty: Specialty;
 
   @ApiProperty({
     type: Number,
@@ -43,7 +44,6 @@ export class Medico {
   })
   @Column({unique: true})
   public registrationNumber: number;
-
 
   @ApiProperty({
     type: Number,

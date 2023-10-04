@@ -14,7 +14,7 @@ async function bootstrap() {
   const config = new DocumentBuilder()
     .setTitle('Clinica Online')
     .setDescription('Backend Clinica')
-    .setVersion('1.2')
+    .setVersion('1.3')
     .build();
 
   const document = SwaggerModule.createDocument(app, config)

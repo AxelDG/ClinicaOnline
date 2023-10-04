@@ -10,10 +10,10 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Role } from 'src/common/enums/rol.enum';
 import { PacientesService } from 'src/pacientes/pacientes.service';
-import { Paciente } from 'src/pacientes/paciente.entity';
 import { MedicosService } from 'src/medicos/medicos.service';
-import { Medico } from 'src/medicos/medico.entity';
 import { RegisterMedicDto } from './dto/registerMedic.dto';
+import { RegisterAdminDto } from './dto/registerAdmin.dto';
+import { AdminsService } from 'src/admins/admins.service';
 
 @Injectable()
 export class AuthService {
@@ -22,9 +22,8 @@ export class AuthService {
     private jwtService: JwtService,
     private pacienteService: PacientesService,
     private medicoService: MedicosService,
+    private adminService: AdminsService,
     @InjectRepository(User) private readonly userRepository: Repository<User>,
-    @InjectRepository(Paciente) private readonly pacienteRepository: Repository<Paciente>,
-    @InjectRepository(Medico) private readonly medicoRepository: Repository<Medico>,
   ) {}
 
   async validateUser(username: string, password: string) {
@@ -93,24 +92,33 @@ export class AuthService {
       email,
     };
   }
-  // async register({ name, email, password }: RegisterDto) {
-  //   const user = await this.userService.findOneWithUserName(name);
 
-  //   if (user) {
-  //     throw new BadRequestException('User already exists');
-  //   }
+  async registerAdmin({ name, email, password }: RegisterAdminDto) {
+    const user = await this.userService.findOneWithUserName(email);
 
-  //   await this.userService.create({
-  //     name,
-  //     email,
-  //     password: await bcrypt.hash(password, 10),
-  //   });
+    if (user) {
+      throw new BadRequestException('User already exists');
+    }
 
-  //   return {
-  //     name,
-  //     email,
-  //   };
-  // }
+    const adminUser = await this.userService.create({
+      name,
+      email,
+      password: await bcrypt.hash(password, 10),
+      role: Role.admin
+    });
+
+    await this.adminService.createAdmin({
+      adminName: name,
+      userId: adminUser.id,
+      hospitalId: 1
+    })
+
+    return {
+      name,
+      email,
+    };
+  }
+  
 
   async login({ email, password }: LoginDto) {
     const user = await this.userService.findByEmailWithPassword(email);

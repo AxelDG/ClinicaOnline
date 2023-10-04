@@ -1,6 +1,6 @@
-import { IsDateString, IsNumber, IsOptional } from '@nestjs/class-validator';
 import { Transform } from 'class-transformer';
-import { IsEmail, IsString, MinLength } from 'class-validator';
+import { IsEmail, IsNumber, IsString, MinLength } from 'class-validator';
+import { Specialty } from 'src/common/enums/specialty.enum';
 
 export class RegisterMedicDto {
   @Transform(({ value }) => value.trim())
@@ -16,7 +16,7 @@ export class RegisterMedicDto {
   email: string;
 
   @IsString()
-  specialty: string;
+  specialty: Specialty;
 
   @IsNumber()
   registrationNumber: number;

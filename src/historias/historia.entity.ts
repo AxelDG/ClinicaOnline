@@ -1,12 +1,10 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { Admin } from 'src/admins/admin.entity';
 import { Medico } from 'src/medicos/medico.entity';
 import { Paciente } from 'src/pacientes/paciente.entity';
 import {
   Entity,
   Column,
   PrimaryGeneratedColumn,
-  OneToMany,
   OneToOne,
   JoinColumn,
   ManyToMany,

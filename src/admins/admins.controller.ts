@@ -17,7 +17,7 @@ import { Role } from 'src/common/enums/rol.enum';
 import { Auth } from 'src/auth/decorators/auth.decorator';
 
 @ApiTags('admins')
-@Auth(Role.admin)
+@Auth(Role.superadmin)
 @Controller('admins')
 export class AdminsController {
   constructor(private readonly adminsService: AdminsService) {}

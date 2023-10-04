@@ -1,4 +1,5 @@
 import { IsNumber, IsString } from "@nestjs/class-validator";
+import { Specialty } from "src/common/enums/specialty.enum";
 
 export class UpdateMedicoDto {
 
@@ -12,7 +13,7 @@ export class UpdateMedicoDto {
   registrationNumber?: number;
 
   @IsString()
-  specialty?: string;
+  specialty?: Specialty
 
   @IsNumber()
   hospitalId?: number;

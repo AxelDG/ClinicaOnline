@@ -27,9 +27,7 @@ export class PacientesService {
   }
 
   getPacientes() {
-    return this.pacienteRepository.find({
-      
-    });
+    return this.pacienteRepository.find();
   }
 
   async getPaciente(id: number) {

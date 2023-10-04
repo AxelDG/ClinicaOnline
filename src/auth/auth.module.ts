@@ -13,17 +13,17 @@ import { Paciente } from 'src/pacientes/paciente.entity';
 import { PacientesService } from 'src/pacientes/pacientes.service';
 import { Medico } from 'src/medicos/medico.entity';
 import { MedicosService } from 'src/medicos/medicos.service';
+import { AdminsService } from 'src/admins/admins.service';
+import { Admin } from 'src/admins/admin.entity';
 
 @Module({
-  providers: [AuthService, LocalStrategy, UserService, JwtStrategy, RefreshJwtStrategy, PacientesService, MedicosService],
+  providers: [AuthService, LocalStrategy, UserService, JwtStrategy, RefreshJwtStrategy, PacientesService, MedicosService, AdminsService],
   controllers: [AuthController],
   imports: [
-    TypeOrmModule.forFeature([User, Paciente, Medico]),
+    TypeOrmModule.forFeature([User, Paciente, Medico, Admin]),
     JwtModule.register({
       secret: jwtConstants.secret,
-      signOptions: { expiresIn: '60s' },
-      //Expira en un minuto
-      //al pasar el minuto tendra que volverse a logear para acceder
+      signOptions: { expiresIn: '300s' },
     }),
   ],
 })
