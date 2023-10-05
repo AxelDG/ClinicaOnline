@@ -12,6 +12,7 @@ import { PacientesModule } from './pacientes/pacientes.module';
 import { TurnosModule } from './turnos/turnos.module';
 import { PlanesModule } from './planes/planes.module';
 
+
 @Module({
   imports: [
     TypeOrmModule.forRoot({
