@@ -34,13 +34,13 @@ export class AuthController {
   }
 
   @Post('register/medic')
-  @Auth(Role.admin)
+  // @Auth(Role.admin)
   async registerMedic(@Body() registerMedicDto: RegisterMedicDto) {
     return await this.authService.registerMedic(registerMedicDto);
   }
 
   @Post('register/admin')
-  @Auth(Role.superadmin)
+  // @Auth(Role.superadmin)
   async registerAdmin(@Body() registerAdminDto: RegisterAdminDto) {
     return await this.authService.registerAdmin(registerAdminDto)
   }
