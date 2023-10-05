@@ -62,7 +62,7 @@ export class Paciente{
   @JoinTable()
   medicos: Medico[]
 
-  @OneToOne(() => Plan, plan => plan.paciente)
+  @OneToMany(() => Plan, plan => plan.pacientes)
   @JoinColumn({name: 'planId'})
   public plan: Plan
 

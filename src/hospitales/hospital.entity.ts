@@ -10,6 +10,7 @@ import {
   OneToOne,
   JoinTable,
   ManyToMany,
+  ManyToOne,
 } from 'typeorm';
 
 @Entity('hospitales')
@@ -39,8 +40,8 @@ export class Hospital {
   @OneToMany(() => Medico, medico => medico.hospital)
   public medicos: Medico[]
 
-  @OneToOne(() => Admin, admins => admins.hospital)
-  public admins: Admin;
+  @ManyToOne(() => Admin, admins => admins.hospital)
+  public admins: Admin[];
 
   @ManyToMany(() => Plan, plan => plan.hospitales)
   @JoinTable()

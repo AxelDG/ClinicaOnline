@@ -8,6 +8,7 @@ import {
   OneToOne,
   ManyToOne,
   JoinColumn,
+  OneToMany,
 } from 'typeorm';
 
 @Entity('admins')
@@ -41,7 +42,7 @@ export class Admin {
   @Column({nullable: false})
   public hospitalId: number;  
 
-  @OneToOne(() => Hospital, (hospital) => hospital.admins)
+  @OneToMany(() => Hospital, (hospital) => hospital.admins)
   @JoinColumn({name: 'hospitalId'})
   public hospital: Hospital;
 

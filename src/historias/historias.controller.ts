@@ -22,31 +22,31 @@ export class HistoriasController {
   constructor(private readonly historiasService: HistoriasService) {}
 
   @Get()
-  @Auth(Role.medic)
+  // @Auth(Role.medic)
   getHistorias(): Promise<Historia[]> {
     return this.historiasService.getHistorias();
   }
 
   @Get(':id')
-  @Auth(Role.medic)
+  // @Auth(Role.medic)
   getHistoria(@Param('id', ParseIntPipe) id: number) {
     return this.historiasService.getHistoria(id);
   }
 
   @Post()
-  @Auth(Role.medic)
+  // @Auth(Role.medic)
   createHistoia(@Body() newHistoria: CreateHistoriaDto) {
     return this.historiasService.createHistoria(newHistoria);
   }
 
   @Delete(':id')
-  @Auth(Role.admin)
+  // @Auth(Role.admin)
   deleteHistoria(@Param('id', ParseIntPipe) id: number) {
     return this.historiasService.deleteHistoria(id);
   }
 
   @Put(':id')
-  @Auth(Role.medic)
+  // @Auth(Role.medic)
   updateHistoria(
     @Param('id', ParseIntPipe) id: number,
     @Body()
