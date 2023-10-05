@@ -1,33 +1,59 @@
-import { Admin } from 'src/admins/admin.entity';
+import { ApiProperty } from '@nestjs/swagger';
+import { Medico } from 'src/medicos/medico.entity';
 import { Paciente } from 'src/pacientes/paciente.entity';
 import {
   Entity,
   Column,
   PrimaryGeneratedColumn,
-  OneToMany,
   OneToOne,
+  JoinColumn,
+  ManyToMany,
+  JoinTable
 } from 'typeorm';
 
 @Entity('historias')
 export class Historia {
+
+  @ApiProperty({
+    type: Number,
+    description: 'This is a required property'
+  })
   @PrimaryGeneratedColumn()
   public id: number;
 
-  @Column()
-  public patientName: string;
-
+  @ApiProperty({
+    type: Date,
+    description: 'This is a required property'
+  })
   @Column({ type: 'date' })
   public date: Date;
 
+  @ApiProperty({
+    type: String,
+    description: 'This is a required property'
+  })
   @Column()
   public symptoms: string;
 
+  @ApiProperty({
+    type: String,
+    description: 'This is a required property'
+  })
   @Column()
   public treatment: string;
 
-  @OneToMany(() => Admin, (admin) => admin.historias)
-  public admins: Admin[];
+  @ApiProperty({
+    type: Number,
+    description: 'This is a required property'
+  })
+  @Column({nullable: false})
+  public patientId: number;
 
-  @OneToOne(() => Paciente, (paciente) => paciente.historias)
-  public pacientes: Paciente[];
+  @OneToOne(() => Paciente, paciente => paciente.historia)
+  @JoinColumn({name: 'patientId'})
+  public paciente: Paciente
+
+  @ManyToMany(() => Medico, medico => medico.historias)
+  @JoinTable()
+  public medicos: Medico[]
 }

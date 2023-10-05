@@ -1,4 +1,13 @@
+import { IsNumber, IsString } from "@nestjs/class-validator";
+
 export class CreatePlanDto {
-  classic: string;
-  family: string;
+
+  @IsString()
+  type: string;
+
+  @IsNumber()
+  price: number;
+
+  @IsNumber()
+  hospitalId: number;
 }

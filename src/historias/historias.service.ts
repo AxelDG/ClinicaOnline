@@ -15,7 +15,7 @@ export class HistoriasService {
   async createHistoria(historia: CreateHistoriaDto) {
     const historiaFound = await this.historiaRepository.findOne({
       where: {
-        patientName: historia.patientName,
+        patientId: historia.patientId,
       },
     });
 
@@ -37,7 +37,7 @@ export class HistoriasService {
       where: {
         id,
       },
-      relations: [],
+      relations: ['paciente'],
     });
 
     if (!historiaFound) {
@@ -47,16 +47,14 @@ export class HistoriasService {
   }
 
   async deleteHistoria(id: number) {
-    const historiaFound = await this.historiaRepository.findOne({
-      where: {
-        id,
-      },
-    });
+    const historiaFound = await this.historiaRepository.findOne({where: {
+      id
+    }});
 
     if (!historiaFound) {
       return new HttpException('Clinic history not found', HttpStatus.NOT_FOUND);
     }
-    return this.historiaRepository.delete(historiaFound);
+    return this.historiaRepository.delete({id: historiaFound.id});
   }
 
   async updateHistoria(id: number, historia: UpdateHistoriaDto) {

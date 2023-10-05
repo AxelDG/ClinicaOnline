@@ -1,4 +1,14 @@
+import { IsDateString, IsNumber } from "@nestjs/class-validator";
+
 export class CreateTurnoDto {
-  schedule: string;
-  date: number;
+
+  @IsNumber()
+  medicId: number;
+
+  @IsNumber()
+  patientId: number;
+
+  @IsDateString()
+  date: Date;
+
 }

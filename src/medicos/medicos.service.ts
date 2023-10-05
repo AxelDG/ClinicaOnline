@@ -13,22 +13,23 @@ export class MedicosService {
   ) {}
 
   async createMedico(medico: CreateMedicoDto) {
-    const medicoFound = await this.medicoRepository.findOne({
+    const userFound = await this.medicoRepository.findOne({
       where: {
-        medicName: medico.medicName,
+        id: medico.userId
       },
     });
 
-    if (medicoFound) {
+    if (userFound) {
       return new HttpException('Medic already exist', HttpStatus.CONFLICT);
     }
     const newMedico = this.medicoRepository.create(medico);
+    
     return this.medicoRepository.save(newMedico);
   }
 
   getMedicos() {
     return this.medicoRepository.find({
-      relations: ['hospitales'],
+      relations: ['pacientes'],
     });
   }
 
@@ -37,7 +38,7 @@ export class MedicosService {
       where: {
         id,
       },
-      relations: ['hospitales'],
+      relations: ['pacientes'],
     });
 
     if (!medicoFound) {
@@ -47,16 +48,11 @@ export class MedicosService {
   }
 
   async deleteMedico(id: number) {
-    const medicoFound = await this.medicoRepository.findOne({
-      where: {
-        id,
-      },
-    });
-
-    if (!medicoFound) {
+    const deleteResult = await this.medicoRepository.delete(id);
+  
+    if (deleteResult.affected === 0) {
       return new HttpException('Medic not found', HttpStatus.NOT_FOUND);
     }
-    return this.medicoRepository.delete(medicoFound);
   }
 
   async updateMedico(id: number, medico: UpdateMedicoDto) {

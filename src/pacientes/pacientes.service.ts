@@ -1,9 +1,9 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Paciente } from './paciente.entity';
-import { Repository } from 'typeorm';
 import { CreatePacienteDto } from './dto/create-pacientes.dto';
 import { UpdatePacienteDto } from './dto/update-pacientes.dto';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class PacientesService {
@@ -13,13 +13,13 @@ export class PacientesService {
   ) {}
 
   async createPaciente(paciente: CreatePacienteDto) {
-    const pacienteFound = await this.pacienteRepository.findOne({
+    const userFound = await this.pacienteRepository.findOne({
       where: {
-        name: paciente.name,
+        patientName: paciente.patientName
       },
     });
 
-    if (pacienteFound) {
+    if (userFound) {
       return new HttpException('Patient already exist', HttpStatus.CONFLICT);
     }
     const newPaciente = this.pacienteRepository.create(paciente);
@@ -27,17 +27,15 @@ export class PacientesService {
   }
 
   getPacientes() {
-    return this.pacienteRepository.find({
-      relations: [],
-    });
+    return this.pacienteRepository.find();
   }
 
   async getPaciente(id: number) {
     const pacienteFound = await this.pacienteRepository.findOne({
       where: {
-        id,
+        id
       },
-      relations: [],
+      
     });
 
     if (!pacienteFound) {
@@ -47,16 +45,12 @@ export class PacientesService {
   }
 
   async deletePaciente(id: number) {
-    const pacienteFound = await this.pacienteRepository.findOne({
-      where: {
-        id,
-      },
-    });
+    const pacienteFound = await this.pacienteRepository.findOne({where: {id}});
 
     if (!pacienteFound) {
       return new HttpException('Patient not found', HttpStatus.NOT_FOUND);
     }
-    return this.pacienteRepository.delete(pacienteFound);
+    return this.pacienteRepository.delete({id: pacienteFound.id});
   }
 
   async updatePaciente(id: number, paciente: UpdatePacienteDto) {
