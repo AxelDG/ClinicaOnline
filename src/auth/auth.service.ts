@@ -58,6 +58,8 @@ export class AuthService {
       userId: patientUser.id
     })
 
+    await this.pacienteService.addPatientToHospital(patientUser.id, 1)
+
     return {
       name,
       email,

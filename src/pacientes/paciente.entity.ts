@@ -1,5 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Historia } from 'src/historias/historia.entity';
+import { Hospital } from 'src/hospitales/hospital.entity';
 import { Medico } from 'src/medicos/medico.entity';
 import { Plan } from 'src/planes/plan.entity';
 import { Turno } from 'src/turnos/turno.entity';
@@ -62,11 +63,14 @@ export class Paciente{
   @JoinTable()
   medicos: Medico[]
 
+  @ManyToMany(() => Hospital, hospital => hospital.pacientes)
+  hospitales: Hospital[]
+
   @OneToMany(() => Plan, plan => plan.pacientes)
   @JoinColumn({name: 'planId'})
   public plan: Plan
 
-  @OneToOne(() => Historia, historia => historia.paciente, {eager: true})
+  @OneToOne(() => Historia, historia => historia.paciente)
   public historia: Historia
 
   @ManyToOne(() => User, usuario => usuario.pacientes)

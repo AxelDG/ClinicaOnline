@@ -15,12 +15,13 @@ import { Medico } from 'src/medicos/medico.entity';
 import { MedicosService } from 'src/medicos/medicos.service';
 import { AdminsService } from 'src/admins/admins.service';
 import { Admin } from 'src/admins/admin.entity';
+import { Hospital } from 'src/hospitales/hospital.entity';
 
 @Module({
   providers: [AuthService, LocalStrategy, UserService, JwtStrategy, RefreshJwtStrategy, PacientesService, MedicosService, AdminsService],
   controllers: [AuthController],
   imports: [
-    TypeOrmModule.forFeature([User, Paciente, Medico, Admin]),
+    TypeOrmModule.forFeature([User, Paciente, Medico, Admin, Hospital]),
     JwtModule.register({
       secret: jwtConstants.secret,
       signOptions: { expiresIn: '300s' },

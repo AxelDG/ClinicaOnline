@@ -3,13 +3,19 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Paciente } from './paciente.entity';
 import { CreatePacienteDto } from './dto/create-pacientes.dto';
 import { UpdatePacienteDto } from './dto/update-pacientes.dto';
-import { Repository } from 'typeorm';
+import { DataSource, Repository } from 'typeorm';
+import { Hospital } from 'src/hospitales/hospital.entity';
 
 @Injectable()
 export class PacientesService {
   constructor(
+    private readonly dataSource: DataSource,
+
     @InjectRepository(Paciente)
     private pacienteRepository: Repository<Paciente>,
+
+    @InjectRepository(Hospital)
+    private hospitalRepository: Repository<Hospital>,
   ) {}
 
   async createPaciente(paciente: CreatePacienteDto) {
@@ -24,6 +30,32 @@ export class PacientesService {
     }
     const newPaciente = this.pacienteRepository.create(paciente);
     return this.pacienteRepository.save(newPaciente);
+  }
+
+  async addPatientToHospital(patient: number, hospital: number) {
+    const patientFound = await this.pacienteRepository.findOne({
+      where: {
+        id: patient,
+      },
+    });
+
+    const hospitalFound = await this.hospitalRepository.findOne({
+      where: {
+        id: hospital,
+      },
+    });
+    if (!patientFound || !hospitalFound) {
+      return new HttpException(
+        "Patient or hospital don't exist",
+        HttpStatus.NOT_FOUND,
+      );
+    }
+    await this.dataSource
+      .createQueryBuilder()
+      .insert()
+      .into('hospitales_pacientes_pacientes')
+      .values({ pacientesId: patientFound.id, hospitalesId: hospitalFound.id })
+      .execute();
   }
 
   getPacientes() {
