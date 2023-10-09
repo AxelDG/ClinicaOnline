@@ -32,6 +32,7 @@
     "bcrypt": "^5.1.1",
     "bcryptjs": "^2.4.3",
     "class-transformer": "^0.5.1",
+    "cors": "^2.8.5",
     "mysql2": "^3.6.0",
     "passport": "^0.6.0",
     "passport-jwt": "^4.0.1",
@@ -81,6 +82,5 @@
     ],
     "coverageDirectory": "../coverage",
     "testEnvironment": "node"
-    
   }
 }
