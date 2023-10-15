@@ -20,7 +20,7 @@ export class User {
     type: String,
     description: 'This is a required property'
   })
-  @Column({ unique: true, nullable: false })
+  @Column({nullable: false })
   name: string;
 
   @ApiProperty({

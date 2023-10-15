@@ -32,6 +32,11 @@ export class MedicosController {
     return this.medicosService.getMedico(id);
   }
 
+  @Get('usuario/:id')
+  getMedicByUser(@Param('id', ParseIntPipe) id: number) {
+    return this.medicosService.getMedicByUser(id);
+  }
+
   @Post()
   createMedico(@Body() newMedico: CreateMedicoDto) {
     return this.medicosService.createMedico(newMedico);

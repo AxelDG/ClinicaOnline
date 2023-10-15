@@ -32,6 +32,11 @@ export class PacientesController {
     return this.pacientesService.getPaciente(id);
   }
 
+  @Get('usuario/:id')
+  getPatientByUser(@Param('id', ParseIntPipe) id: number) {
+    return this.pacientesService.getPatientByUser(id);
+  }
+
   @Post()
   createPaciente(@Body() newPaciente: CreatePacienteDto) {
     return this.pacientesService.createPaciente(newPaciente);
