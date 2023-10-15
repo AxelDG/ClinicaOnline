@@ -11,14 +11,19 @@ async function bootstrap() {
       forbidNonWhitelisted: true,
     }),
   );
+
+  app.enableCors({
+    origin: 'http://127.0.0.1:5173',
+    credentials: true,
+  });
   const config = new DocumentBuilder()
     .setTitle('Clinica Online')
     .setDescription('Backend Clinica')
     .setVersion('1.3')
     .build();
 
-  const document = SwaggerModule.createDocument(app, config)
-  SwaggerModule.setup('api', app, document)
+  const document = SwaggerModule.createDocument(app, config);
+  SwaggerModule.setup('api', app, document);
   await app.listen(3000);
 }
 bootstrap();

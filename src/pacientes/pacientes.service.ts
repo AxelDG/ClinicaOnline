@@ -76,6 +76,17 @@ export class PacientesService {
     return pacienteFound;
   }
 
+  async getPatientByUser(id: number) {
+    const patientFound = await this.pacienteRepository.findOne({
+      where: {userId: id}
+    })
+
+    if (!patientFound) {
+      return new HttpException('User Patient not found', HttpStatus.NOT_FOUND)
+    }
+    return patientFound
+  }
+
   async deletePaciente(id: number) {
     const pacienteFound = await this.pacienteRepository.findOne({where: {id}});
 

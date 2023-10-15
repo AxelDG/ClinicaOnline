@@ -47,6 +47,17 @@ export class MedicosService {
     return medicoFound;
   }
 
+  async getMedicByUser(id: number) {
+    const medicFound = await this.medicoRepository.findOne({
+      where: {userId: id}
+    })
+
+    if (!medicFound) {
+      return new HttpException('User Medic not found', HttpStatus.NOT_FOUND)
+    }
+    return medicFound
+  }
+
   async deleteMedico(id: number) {
     const deleteResult = await this.medicoRepository.delete(id);
   
