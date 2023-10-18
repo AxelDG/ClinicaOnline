@@ -14,6 +14,7 @@ import { MedicosService } from 'src/medicos/medicos.service';
 import { RegisterMedicDto } from './dto/registerMedic.dto';
 import { RegisterAdminDto } from './dto/registerAdmin.dto';
 import { AdminsService } from 'src/admins/admins.service';
+import { UpdateUserDto } from 'src/user/dto/CreateUserDto';
 
 @Injectable()
 export class AuthService {
@@ -107,6 +108,7 @@ export class AuthService {
       email,
       password: await bcrypt.hash(password, 10),
       role: Role.admin
+
     });
 
     await this.adminService.createAdmin({
@@ -119,6 +121,21 @@ export class AuthService {
       name,
       email,
     };
+  }
+
+  async updateUser(id: number, user: UpdateUserDto) {
+    const userFound = await this.userRepository.findOne({
+      where: {
+        id,
+      },
+    });
+
+    if (!userFound) {
+      return new HttpException('User not found', HttpStatus.NOT_FOUND);
+    }
+
+    const updateUser = Object.assign(userFound, user);
+    return this.userRepository.save(updateUser);
   }
   
 
@@ -135,13 +152,15 @@ export class AuthService {
 
     const payload = { email: user.email, role: user.role };
     const token = await this.jwtService.signAsync(payload);
-
     return {
-      user : user.name,
+      name : user.name,
+      role: user.role,
       email,
-      token,
+      token
     };
+    
   }
+  
 
   async refreshToken(user: User) {
     const payload = {
