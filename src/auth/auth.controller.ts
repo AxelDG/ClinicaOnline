@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, ParseIntPipe, Post, Request, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, ParseIntPipe, Post, Put, Request, UseGuards } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { RefreshJwtGuard } from './guards/refresh-jwt-auth.guard';
 import { RegisterPatientDto } from './dto/registerPatient.dto';
@@ -11,6 +11,7 @@ import { Auth } from './decorators/auth.decorator';
 import { Role } from 'src/common/enums/rol.enum';
 import { RegisterMedicDto } from './dto/registerMedic.dto';
 import { RegisterAdminDto } from './dto/registerAdmin.dto';
+import { UpdateUserDto } from 'src/user/dto/CreateUserDto';
 
 @ApiTags('auth')
 @Controller('auth')
@@ -23,7 +24,7 @@ export class AuthController {
   ) {}
 
   @Get('users')
-  @Auth(Role.admin)
+  // @Auth(Role.admin)
   async findUsers() {
     return await this.userRepository.find();
   }
@@ -54,6 +55,15 @@ export class AuthController {
   @Auth(Role.admin)
   async deleteUser(@Param('id', ParseIntPipe) id: number) {
     return await this.authService.deleteUser(id)
+  }
+
+  @Put(':id')
+  updateUser(
+    @Param('id', ParseIntPipe) id: number,
+    @Body()
+    user: UpdateUserDto,
+  ) {
+    return this.authService.updateUser(id, user);
   }
 
 

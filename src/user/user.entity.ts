@@ -1,4 +1,4 @@
-import { BeforeInsert, Column, Entity, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
+import { BeforeInsert, Column, Entity, PrimaryGeneratedColumn, OneToMany, AfterInsert, BeforeUpdate } from 'typeorm';
 import * as bcrypt from 'bcrypt';
 import { Role } from 'src/common/enums/rol.enum';
 import { Admin } from 'src/admins/admin.entity';
@@ -34,7 +34,7 @@ export class User {
     type: String,
     description: 'This is a required property'
   })
-  @Column({ nullable: false, select: false })
+  @Column({ nullable: false})
   password: string;
 
   @ApiProperty({
@@ -45,6 +45,7 @@ export class User {
   role: Role;
 
   @BeforeInsert()
+  @BeforeUpdate()
   async hashPassword() {
     this.password = await bcrypt.hash(this.password, 10);
   }

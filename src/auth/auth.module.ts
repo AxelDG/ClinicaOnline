@@ -24,7 +24,8 @@ import { Hospital } from 'src/hospitales/hospital.entity';
     TypeOrmModule.forFeature([User, Paciente, Medico, Admin, Hospital]),
     JwtModule.register({
       secret: jwtConstants.secret,
-      signOptions: { expiresIn: '300s' },
+      signOptions: { expiresIn: '600s' },
+      // 10 minutos
     }),
   ],
 })
