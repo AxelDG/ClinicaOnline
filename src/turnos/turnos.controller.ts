@@ -27,11 +27,19 @@ export class TurnosController {
     return this.turnosService.getTurnos();
   }
 
+  @Get('/info')
+  // @Auth(Role.medic)
+  getTurnosInfo(): Promise<Turno[]> {
+    return this.turnosService.getTurnosInfo();
+  }
+
   @Get(':id')
   // @Auth(Role.medic)
   getTurno(@Param('id', ParseIntPipe) id: number) {
     return this.turnosService.getTurno(id);
   }
+
+  
 
   @Post()
   // @Auth(Role.patient)

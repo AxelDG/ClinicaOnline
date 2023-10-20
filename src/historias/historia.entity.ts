@@ -49,7 +49,7 @@ export class Historia {
   @Column({nullable: false})
   public patientId: number;
 
-  @OneToOne(() => Paciente, paciente => paciente.historia)
+  @OneToOne(() => Paciente, paciente => paciente.historia, {onDelete: 'CASCADE'})
   @JoinColumn({name: 'patientId'})
   public paciente: Paciente
 

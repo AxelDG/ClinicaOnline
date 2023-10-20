@@ -59,7 +59,7 @@ export class Medico {
   @Column({nullable: false})
   public userId: number;
 
-  @ManyToMany(() => Paciente, paciente => paciente.medicos)
+  @ManyToMany(() => Paciente, paciente => paciente.medicos, {onDelete: 'CASCADE'})
   public pacientes: Paciente[]
 
   @ManyToMany(() => Historia, historia => historia.medicos)
@@ -72,7 +72,7 @@ export class Medico {
   @OneToMany(() => Turno, turno => turno.medico)
   public turnos: Turno[]
 
-  @ManyToOne(() => User, usuario => usuario.medicos)
+  @ManyToOne(() => User, usuario => usuario.medicos, {onDelete: 'CASCADE'})
   @JoinColumn({name: 'userId'})
   public usuario: User
   

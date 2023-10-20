@@ -73,6 +73,26 @@ export class TurnosService {
     });
   }
 
+
+  async getTurnosInfo(): Promise<Turno[]> {
+    const turnos = await this.turnoRepository.query(`
+      SELECT
+        turnos.id,
+        turnos.date,
+        medicos.medicName,
+        medicos.specialty,
+        pacientes.patientName
+      FROM
+        turnos
+      JOIN
+        medicos ON medicos.id = turnos.medicId
+      JOIN
+        pacientes ON pacientes.id = turnos.patientId
+    `);
+  
+    return turnos;
+  }
+
   async getTurno(id: number) {
     const turnoFound = await this.turnoRepository.findOne({
       where: {
