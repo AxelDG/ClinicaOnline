@@ -17,7 +17,7 @@ export class Turno {
     type: Number,
     description: 'This is a required property'
   })
-  @Column({nullable: false})
+  @Column()
   public patientId: number;
 
   @ApiProperty({
@@ -34,11 +34,11 @@ export class Turno {
   @Column({ type: 'date' })
   public date: Date;
 
-  @ManyToOne(() => Medico, medico => medico.turnos, {eager: true})
+  @ManyToOne(() => Medico, medico => medico.turnos, {onDelete: 'CASCADE'})
   @JoinColumn({name: 'medicId'})
   public medico: Medico
 
-  @ManyToOne(() => Paciente, paciente => paciente.turnos, {eager: true})
+  @ManyToOne(() => Paciente, paciente => paciente.turnos, {onDelete: 'CASCADE'})
   @JoinColumn({name: 'patientId'})
   public paciente: Paciente;
 

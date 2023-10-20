@@ -49,7 +49,7 @@ export class Paciente{
     type: Number,
     description: 'This is a required property'
   })
-  @Column({nullable: false})
+  @Column()
   public userId: number;
 
   @ApiProperty({
@@ -73,10 +73,10 @@ export class Paciente{
   @OneToOne(() => Historia, historia => historia.paciente)
   public historia: Historia
 
-  @ManyToOne(() => User, usuario => usuario.pacientes)
+  @ManyToOne(() => User, usuario => usuario.pacientes, {onDelete: 'CASCADE'})
   @JoinColumn({name: 'userId'})
   public usuario: User
 
-  @OneToMany(() => Turno, turno => turno.paciente)
+  @OneToMany(() => Turno, turno => turno.paciente, {onDelete: 'CASCADE'})
   public turnos: Turno[]
 }

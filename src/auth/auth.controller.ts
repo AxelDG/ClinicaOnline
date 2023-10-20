@@ -52,7 +52,7 @@ export class AuthController {
   }
 
   @Delete(':id')
-  @Auth(Role.admin)
+  // @Auth(Role.admin)
   async deleteUser(@Param('id', ParseIntPipe) id: number) {
     return await this.authService.deleteUser(id)
   }

@@ -46,6 +46,23 @@ export class HistoriasService {
     return historiaFound;
   }
 
+  async getHistoriaInfo(): Promise<Historia[]> {
+    const historias = await this.historiaRepository.query(`
+      SELECT
+        historias.id,
+        historias.date,
+        historias.symptoms,
+        historias.treatment,
+        pacientes.patientName
+      FROM
+        historias
+      JOIN
+        pacientes ON pacientes.id = historias.patientId
+    `);
+  
+    return historias;
+  }
+
   async deleteHistoria(id: number) {
     const historiaFound = await this.historiaRepository.findOne({where: {
       id

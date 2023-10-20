@@ -27,6 +27,12 @@ export class HistoriasController {
     return this.historiasService.getHistorias();
   }
 
+  @Get('/info')
+  // @Auth(Role.medic)
+  getHistoriasInfo(): Promise<Historia[]> {
+    return this.historiasService.getHistoriaInfo();
+  }
+
   @Get(':id')
   // @Auth(Role.medic)
   getHistoria(@Param('id', ParseIntPipe) id: number) {
