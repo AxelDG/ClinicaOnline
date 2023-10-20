@@ -74,6 +74,17 @@ export class PlanesService {
     return planFound;
   }
 
+  async getPlanByUserId(idUser: number): Promise<Plan> {
+    const planes = await this.planRepository.query(`
+    SELECT pl.type, pl.price
+    FROM pacientes p
+    INNER JOIN planes pl on pl.id = p.planId
+    WHERE p.userId = ${idUser}
+    `);
+  
+    return planes;
+  }
+
   async deletePlan(id: number) {
     const planFound = await this.planRepository.findOne({where: {
       id

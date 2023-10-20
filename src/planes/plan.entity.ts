@@ -42,6 +42,7 @@ export class Plan {
   public hospitalId: number;
 
   @ManyToOne(() => Paciente, (paciente) => paciente.plan)
+  @JoinColumn({name: 'pacientesId'})
   public pacientes: Paciente[];
 
   @ManyToMany(() => Hospital, (hospital) => hospital.planes, {onDelete: 'CASCADE'})

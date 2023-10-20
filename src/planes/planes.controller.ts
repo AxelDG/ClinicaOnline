@@ -27,6 +27,11 @@ export class PlanesController {
     return this.planesService.getPlanes();
   }
 
+  @Get('/info/:id')
+  getPlanByUserId(@Param('id', ParseIntPipe) id: number) {
+    return this.planesService.getPlanByUserId(id);
+  }
+
   @Get(':id')
   getPlan(@Param('id', ParseIntPipe) id: number) {
     return this.planesService.getPlan(id);
