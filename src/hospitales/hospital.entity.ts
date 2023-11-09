@@ -8,7 +8,6 @@ import {
   Column,
   PrimaryGeneratedColumn,
   OneToMany,
-  OneToOne,
   JoinTable,
   ManyToMany,
   ManyToOne,

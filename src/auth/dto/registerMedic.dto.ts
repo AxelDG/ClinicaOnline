@@ -1,5 +1,7 @@
+import { IsDate, IsMilitaryTime } from '@nestjs/class-validator';
 import { Transform } from 'class-transformer';
 import { IsEmail, IsNumber, IsString, MinLength } from 'class-validator';
+import { DateTime } from 'luxon';
 import { Specialty } from 'src/common/enums/specialty.enum';
 
 export class RegisterMedicDto {
@@ -26,4 +28,9 @@ export class RegisterMedicDto {
   @MinLength(6)
   password: string;
 
+  @IsMilitaryTime()
+  startTime: DateTime;
+
+  @IsMilitaryTime()
+  endTime: DateTime;
 }
