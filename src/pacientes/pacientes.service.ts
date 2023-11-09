@@ -87,6 +87,7 @@ export class PacientesService {
     return patientFound
   }
 
+
   async deletePaciente(id: number) {
     const pacienteFound = await this.pacienteRepository.findOne({where: {id}});
 

@@ -1,7 +1,7 @@
-import { IsDateString, IsNumber } from "@nestjs/class-validator";
+import { IsDateString, IsNumber } from '@nestjs/class-validator';
+import { DateTime } from 'luxon';
 
 export class CreateTurnoDto {
-
   @IsNumber()
   medicId: number;
 
@@ -9,6 +9,8 @@ export class CreateTurnoDto {
   patientId: number;
 
   @IsDateString()
-  date: Date;
+  startDate: Date;
 
+  @IsDateString()
+  endDate: Date;
 }

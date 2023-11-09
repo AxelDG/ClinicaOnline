@@ -43,15 +43,10 @@ export class TurnosService {
 
   async addPatientToDoctor(patient: number, doctor: number) {
     const patientFound = await this.pacienteRepository.findOne({
-      where: {
-        id: patient,
-      },
+      where: { id: patient },
     });
-
     const doctorFound = await this.medicoRepository.findOne({
-      where: {
-        id: doctor,
-      },
+      where: { id: doctor },
     });
     if (!patientFound || !doctorFound) {
       return new HttpException(
@@ -73,12 +68,12 @@ export class TurnosService {
     });
   }
 
-
   async getTurnosInfo(): Promise<Turno[]> {
     const turnos = await this.turnoRepository.query(`
       SELECT
         turnos.id,
-        turnos.date,
+        turnos.startDate,
+        turnos.endDate,
         medicos.medicName,
         medicos.specialty,
         pacientes.patientName
@@ -89,7 +84,33 @@ export class TurnosService {
       JOIN
         pacientes ON pacientes.id = turnos.patientId
     `);
-  
+
+    return turnos;
+  }
+
+  async getTurnosByUserId(userId: number): Promise<Turno[]> {
+    const turnos = await this.turnoRepository.query(`
+  SELECT
+    turnos.id,
+    turnos.startDate,
+    turnos.endDate,
+    medicos.medicName,
+    medicos.specialty,
+    pacientes.patientName
+  FROM
+    turnos
+  JOIN
+    medicos ON medicos.id = turnos.medicId
+  JOIN
+    pacientes ON pacientes.id = turnos.patientId
+  JOIN
+    user ON user.id = medicos.userId  
+  WHERE
+    user.id = ${userId}
+    AND turnos.startDate >= CURDATE() - INTERVAL (WEEKDAY(CURDATE()) + 1) DAY
+    AND turnos.startDate < CURDATE() - INTERVAL (WEEKDAY(CURDATE()) + 1 - 7) DAY;
+    `);
+
     return turnos;
   }
 

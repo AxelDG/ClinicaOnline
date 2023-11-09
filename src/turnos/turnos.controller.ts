@@ -33,6 +33,11 @@ export class TurnosController {
     return this.turnosService.getTurnosInfo();
   }
 
+  @Get('user-id/:id')
+  getTurnosByMedicId(@Param('id', ParseIntPipe) id: number) {
+    return this.turnosService.getTurnosByUserId(id);
+  }
+
   @Get(':id')
   // @Auth(Role.medic)
   getTurno(@Param('id', ParseIntPipe) id: number) {

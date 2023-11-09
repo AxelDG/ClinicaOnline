@@ -1,4 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { DateTime } from 'luxon';
 import { Specialty } from 'src/common/enums/specialty.enum';
 import { Historia } from 'src/historias/historia.entity';
 import { Hospital } from 'src/hospitales/hospital.entity';
@@ -46,6 +47,20 @@ export class Medico {
   public registrationNumber: number;
 
   @ApiProperty({
+    type: DateTime,
+    description: 'This is a required property'
+  })
+  @Column({ type: 'time', nullable: true })
+  startTime: DateTime;
+
+  @ApiProperty({
+    type: DateTime,
+    description: 'This is a required property'
+  })
+  @Column({ type: 'time', nullable: true })
+  endTime: DateTime;
+
+  @ApiProperty({
     type: Number,
     description: 'This is a required property'
   })
@@ -65,7 +80,7 @@ export class Medico {
   @ManyToMany(() => Historia, historia => historia.medicos)
   public historias: Historia[]
 
-  @ManyToOne(() => Hospital, hospital => hospital.medicos, {nullable: false})
+  @ManyToOne(() => Hospital, hospital => hospital.medicos)
   @JoinColumn({name: "hospitalId"})
   public hospital: Hospital
 

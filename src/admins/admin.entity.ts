@@ -1,4 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { Article } from 'src/articles/article.entity';
 import { Hospital } from 'src/hospitales/hospital.entity';
 import { User } from 'src/user/user.entity';
 import {
@@ -8,6 +9,8 @@ import {
   ManyToOne,
   JoinColumn,
   OneToMany,
+  ManyToMany,
+  JoinTable,
 } from 'typeorm';
 
 @Entity('admins')
@@ -48,4 +51,8 @@ export class Admin {
   @ManyToOne(() => User, (usuario) => usuario.admins)
   @JoinColumn({name: 'userId'})
   public usuario: User;
+
+  @ManyToMany(() => Article, article => article.admins, {onDelete: 'CASCADE'})
+  @JoinTable()
+  public articles: Article[]
 }

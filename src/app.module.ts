@@ -11,6 +11,7 @@ import { HistoriasModule } from './historias/historias.module';
 import { PacientesModule } from './pacientes/pacientes.module';
 import { TurnosModule } from './turnos/turnos.module';
 import { PlanesModule } from './planes/planes.module';
+import { ArticlesModule } from './articles/articles.module';
 
 
 @Module({
@@ -33,7 +34,8 @@ import { PlanesModule } from './planes/planes.module';
     HistoriasModule,
     PacientesModule,
     TurnosModule,
-    PlanesModule
+    PlanesModule,
+    ArticlesModule
     ],
   controllers: [AppController],
   providers: [AppService],
