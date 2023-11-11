@@ -67,7 +67,7 @@ export class AuthService {
     };
   }
 
-  async registerMedic({ name, lastname, specialty, registrationNumber, email, password, startTime, endTime }: RegisterMedicDto) {
+  async registerMedic({ name, lastname, specialty, registrationNumber, email, password, startTime, endTime, workingDays }: RegisterMedicDto) {
     const user = await this.userService.findOneWithUserName(email);
 
     if (user) {
@@ -89,7 +89,8 @@ export class AuthService {
       hospitalId: 1,
       userId: medicUser.id,
       startTime: startTime,
-      endTime: endTime
+      endTime: endTime,
+      workingDays: workingDays
     })
 
     return {

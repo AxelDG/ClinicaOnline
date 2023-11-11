@@ -62,6 +62,14 @@ export class Medico {
 
   @ApiProperty({
     type: Number,
+    isArray: true,
+    description: 'This is a required property'
+  })
+  @Column({ type: 'simple-array' })
+  public workingDays: number[];
+
+  @ApiProperty({
+    type: Number,
     description: 'This is a required property'
   })
   @Column({nullable: false})
