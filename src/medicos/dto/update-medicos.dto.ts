@@ -1,23 +1,42 @@
-import { IsNumber, IsString } from "@nestjs/class-validator";
-import { Specialty } from "src/common/enums/specialty.enum";
+import {
+  IsMilitaryTime,
+  IsNumber,
+  IsOptional,
+  IsString,
+} from '@nestjs/class-validator';
+import { DateTime } from 'luxon';
+import { Specialty } from 'src/common/enums/specialty.enum';
 
 export class UpdateMedicoDto {
-
+  @IsOptional()
   @IsString()
   medicName?: string;
 
+  @IsOptional()
   @IsString()
   medicLastname?: string;
 
+  @IsOptional()
   @IsNumber()
   registrationNumber?: number;
 
+  @IsOptional()
   @IsString()
-  specialty?: Specialty
+  specialty?: Specialty;
 
+  @IsOptional()
   @IsNumber()
   hospitalId?: number;
 
+  @IsOptional()
   @IsNumber()
   userId?: number;
+
+  @IsOptional()
+  @IsMilitaryTime()
+  startTime?: DateTime;
+
+  @IsOptional()
+  @IsMilitaryTime()
+  endTime?: DateTime;
 }
