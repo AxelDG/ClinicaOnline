@@ -107,8 +107,6 @@ export class TurnosService {
     user ON user.id = medicos.userId  
   WHERE
     user.id = ${userId}
-    AND turnos.startDate >= CURDATE() - INTERVAL (WEEKDAY(CURDATE()) + 1) DAY
-    AND turnos.startDate < CURDATE() - INTERVAL (WEEKDAY(CURDATE()) + 1 - 7) DAY;
     `);
 
     return turnos;

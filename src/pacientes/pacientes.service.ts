@@ -5,11 +5,13 @@ import { CreatePacienteDto } from './dto/create-pacientes.dto';
 import { UpdatePacienteDto } from './dto/update-pacientes.dto';
 import { DataSource, Repository } from 'typeorm';
 import { Hospital } from 'src/hospitales/hospital.entity';
+import { HistoriasService } from 'src/historias/historias.service';
 
 @Injectable()
 export class PacientesService {
   constructor(
     private readonly dataSource: DataSource,
+    private historiaService: HistoriasService,
 
     @InjectRepository(Paciente)
     private pacienteRepository: Repository<Paciente>,
@@ -18,18 +20,34 @@ export class PacientesService {
     private hospitalRepository: Repository<Hospital>,
   ) {}
 
-  async createPaciente(paciente: CreatePacienteDto) {
+  async createPaciente({patientName, patientLastname, birthdate, dni, userId, planId }: CreatePacienteDto) {
     const userFound = await this.pacienteRepository.findOne({
       where: {
-        patientName: paciente.patientName
+        patientName: patientName
       },
     });
 
     if (userFound) {
       return new HttpException('Patient already exist', HttpStatus.CONFLICT);
     }
-    const newPaciente = this.pacienteRepository.create(paciente);
-    return this.pacienteRepository.save(newPaciente);
+    const newPaciente = this.pacienteRepository.create({
+      patientName,
+      patientLastname,
+      birthdate,
+      dni,
+      userId,
+      planId
+    });
+
+    await this.pacienteRepository.save(newPaciente);
+
+    await this.historiaService.createHistoria({
+      date: null,
+      symptoms: null,
+      treatment: null,
+      patientId: newPaciente.id
+    })
+    return newPaciente
   }
 
   async addPatientToHospital(patient: number, hospital: number) {

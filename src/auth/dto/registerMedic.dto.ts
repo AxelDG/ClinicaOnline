@@ -1,4 +1,4 @@
-import { IsDate, IsMilitaryTime } from '@nestjs/class-validator';
+import { IsArray, IsMilitaryTime } from '@nestjs/class-validator';
 import { Transform } from 'class-transformer';
 import { IsEmail, IsNumber, IsString, MinLength } from 'class-validator';
 import { DateTime } from 'luxon';
@@ -33,4 +33,8 @@ export class RegisterMedicDto {
 
   @IsMilitaryTime()
   endTime: DateTime;
+
+  @IsArray()
+  @IsNumber({}, { each: true })
+  workingDays: number[];
 }

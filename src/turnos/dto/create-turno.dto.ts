@@ -1,5 +1,4 @@
 import { IsDateString, IsNumber } from '@nestjs/class-validator';
-import { DateTime } from 'luxon';
 
 export class CreateTurnoDto {
   @IsNumber()

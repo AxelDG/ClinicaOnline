@@ -44,8 +44,6 @@ export class TurnosController {
     return this.turnosService.getTurno(id);
   }
 
-  
-
   @Post()
   // @Auth(Role.patient)
   createTurno(@Body() newTurno: CreateTurnoDto) {

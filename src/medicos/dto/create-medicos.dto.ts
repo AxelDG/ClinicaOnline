@@ -1,4 +1,4 @@
-import { IsMilitaryTime, IsNumber, IsString } from "@nestjs/class-validator";
+import { IsArray, IsMilitaryTime, IsNumber, IsString } from "@nestjs/class-validator";
 import { DateTime } from "luxon";
 import { Specialty } from "src/common/enums/specialty.enum";
 
@@ -27,4 +27,8 @@ export class CreateMedicoDto {
 
   @IsMilitaryTime()
   endTime: DateTime;
+
+  @IsArray()
+  @IsNumber({}, { each: true })
+  workingDays: number[];
 }
