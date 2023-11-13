@@ -96,7 +96,8 @@ export class TurnosService {
     turnos.endDate,
     medicos.medicName,
     medicos.specialty,
-    pacientes.patientName
+    pacientes.patientName,
+    user.id as userId
   FROM
     turnos
   JOIN
