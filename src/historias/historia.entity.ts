@@ -25,21 +25,21 @@ export class Historia {
     type: Date,
     description: 'This is a required property'
   })
-  @Column({ type: 'date' })
+  @Column({ type: 'date', nullable: true})
   public date: Date;
 
   @ApiProperty({
     type: String,
     description: 'This is a required property'
   })
-  @Column()
+  @Column({nullable: true})
   public symptoms: string;
 
   @ApiProperty({
     type: String,
     description: 'This is a required property'
   })
-  @Column()
+  @Column({nullable: true})
   public treatment: string;
 
   @ApiProperty({

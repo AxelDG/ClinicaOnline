@@ -16,12 +16,14 @@ import { MedicosService } from 'src/medicos/medicos.service';
 import { AdminsService } from 'src/admins/admins.service';
 import { Admin } from 'src/admins/admin.entity';
 import { Hospital } from 'src/hospitales/hospital.entity';
+import { Historia } from 'src/historias/historia.entity';
+import { HistoriasService } from 'src/historias/historias.service';
 
 @Module({
-  providers: [AuthService, LocalStrategy, UserService, JwtStrategy, RefreshJwtStrategy, PacientesService, MedicosService, AdminsService],
+  providers: [AuthService, LocalStrategy, UserService, JwtStrategy, RefreshJwtStrategy, PacientesService, MedicosService, AdminsService, HistoriasService],
   controllers: [AuthController],
   imports: [
-    TypeOrmModule.forFeature([User, Paciente, Medico, Admin, Hospital]),
+    TypeOrmModule.forFeature([User, Paciente, Medico, Admin, Hospital, Historia]),
     JwtModule.register({
       secret: jwtConstants.secret,
       signOptions: { expiresIn: '600s' },
