@@ -36,6 +36,7 @@ export class UpdateMedicoDto {
   @IsMilitaryTime()
   endTime?: DateTime;
 
+
   @IsOptional()
   @IsArray()
   @IsNumber({}, { each: true })
