@@ -20,7 +20,10 @@ export class HistoriasService {
     });
 
     if (historiaFound) {
-      return new HttpException('Clinic history already exist', HttpStatus.CONFLICT);
+      return new HttpException(
+        'Clinic history already exist',
+        HttpStatus.CONFLICT,
+      );
     }
     const newHistoria = this.historiaRepository.create(historia);
     return this.historiaRepository.save(newHistoria);
@@ -41,7 +44,10 @@ export class HistoriasService {
     });
 
     if (!historiaFound) {
-      return new HttpException('Clinic history not found', HttpStatus.NOT_FOUND);
+      return new HttpException(
+        'Clinic history not found',
+        HttpStatus.NOT_FOUND,
+      );
     }
     return historiaFound;
   }
@@ -59,19 +65,45 @@ export class HistoriasService {
       JOIN
         pacientes ON pacientes.id = historias.patientId
     `);
-  
+
+    return historias;
+  }
+
+  async getHistoriaInfoById(id: number) {
+    const historias = await this.historiaRepository.query(`
+      SELECT
+        historias.id,
+        historias.date,
+        historias.symptoms,
+        historias.treatment,
+        pacientes.patientName
+      FROM
+        historias
+      JOIN
+        pacientes ON pacientes.id = historias.patientId
+      JOIN 
+        user ON pacientes.userId = user.id
+      WHERE 
+        user.id = ${id}
+    `);
+
     return historias;
   }
 
   async deleteHistoria(id: number) {
-    const historiaFound = await this.historiaRepository.findOne({where: {
-      id
-    }});
+    const historiaFound = await this.historiaRepository.findOne({
+      where: {
+        id,
+      },
+    });
 
     if (!historiaFound) {
-      return new HttpException('Clinic history not found', HttpStatus.NOT_FOUND);
+      return new HttpException(
+        'Clinic history not found',
+        HttpStatus.NOT_FOUND,
+      );
     }
-    return this.historiaRepository.delete({id: historiaFound.id});
+    return this.historiaRepository.delete({ id: historiaFound.id });
   }
 
   async updateHistoria(id: number, historia: UpdateHistoriaDto) {
@@ -82,7 +114,10 @@ export class HistoriasService {
     });
 
     if (!historiaFound) {
-      return new HttpException('Clinic history not found', HttpStatus.NOT_FOUND);
+      return new HttpException(
+        'Clinic history not found',
+        HttpStatus.NOT_FOUND,
+      );
     }
 
     const updateHistoria = Object.assign(historiaFound, historia);
