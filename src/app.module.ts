@@ -21,7 +21,7 @@ import { ArticlesModule } from './articles/articles.module';
       host: 'localhost',
       port: 3306,
       username: 'root',
-      password: '0416378',
+      password: 'root',
       database: 'clinica',
       entities: [__dirname + '/**/*.entity{.ts,.js}'],
       synchronize: true,
