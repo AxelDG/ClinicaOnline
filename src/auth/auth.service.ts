@@ -36,6 +36,49 @@ export class AuthService {
     return null;
   }
 
+  async findUser(id: number): Promise<User> {
+    const user = await this.userRepository.query(`
+      SELECT
+        user.*,
+        pacientes.id as patientId,
+        pacientes.patientName,
+        pacientes.patientLastname,
+        pacientes.birthdate,
+        pacientes.dni,
+        pacientes.planId,
+        planes.type,
+        planes.id
+      FROM
+        user
+      JOIN
+        pacientes ON pacientes.userId = user.id
+      JOIN
+        planes ON planes.id = pacientes.planId
+      WHERE
+        user.id = ${id}
+    `);
+
+    return user;
+  }
+
+  async findUserMedic(id: number): Promise<User> {
+    const user = await this.userRepository.query(`
+      SELECT
+        user.*,
+        medicos.id as medicId,
+        medicos.medicName,
+        medicos.medicLastname
+      FROM
+        user
+      JOIN
+        medicos ON medicos.userId = user.id
+      WHERE
+        user.id = ${id}
+    `);
+
+    return user;
+  }
+
   async registerPatient({ name, lastname, birthdate, dni, planId, email, password }: RegisterPatientDto) {
     const user = await this.userService.findOneWithUserName(email);
 

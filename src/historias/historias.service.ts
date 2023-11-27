@@ -76,7 +76,8 @@ export class HistoriasService {
         historias.date,
         historias.symptoms,
         historias.treatment,
-        pacientes.patientName
+        pacientes.patientName,
+        pacientes.id as patientId
       FROM
         historias
       JOIN

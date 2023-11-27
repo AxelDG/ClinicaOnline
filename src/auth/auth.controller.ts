@@ -29,6 +29,16 @@ export class AuthController {
     return await this.userRepository.find();
   }
 
+  @Get('users/:id')
+  async findUser(@Param('id', ParseIntPipe) id: number) {
+    return await this.authService.findUser(id)
+  }
+
+  @Get('userMedic/:id')
+  async findUserMedic(@Param('id', ParseIntPipe) id: number) {
+    return await this.authService.findUserMedic(id)
+  }
+
   @Post('register/patient')
   async registerPatient(@Body() registerPatientDto: RegisterPatientDto) {
     return await this.authService.registerPatient(registerPatientDto);
