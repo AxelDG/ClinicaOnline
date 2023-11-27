@@ -1,4 +1,4 @@
-import { IsEmail, IsString } from "@nestjs/class-validator";
+import { IsEmail, IsOptional, IsString } from "@nestjs/class-validator";
 import { PartialType } from "@nestjs/mapped-types";
 import { Role } from "src/common/enums/rol.enum";
 

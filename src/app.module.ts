@@ -12,10 +12,15 @@ import { PacientesModule } from './pacientes/pacientes.module';
 import { TurnosModule } from './turnos/turnos.module';
 import { PlanesModule } from './planes/planes.module';
 import { ArticlesModule } from './articles/articles.module';
+import { PaymentModule } from './payment/payment.module';
+import { ConfigModule } from '@nestjs/config';
 
 
 @Module({
   imports: [
+    ConfigModule.forRoot({
+      isGlobal: true
+    }),
     TypeOrmModule.forRoot({
       type: 'mysql',
       host: 'localhost',
@@ -35,7 +40,8 @@ import { ArticlesModule } from './articles/articles.module';
     PacientesModule,
     TurnosModule,
     PlanesModule,
-    ArticlesModule
+    ArticlesModule,
+    PaymentModule,
     ],
   controllers: [AppController],
   providers: [AppService],

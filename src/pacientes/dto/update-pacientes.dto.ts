@@ -1,22 +1,28 @@
-import { IsDateString, IsNumber, IsString } from "@nestjs/class-validator";
+import { IsDateString, IsNumber, IsOptional, IsString } from "@nestjs/class-validator";
 
 export class UpdatePacienteDto {
 
+  @IsOptional()
   @IsString()
-  name?: string;
+  patientName?: string;
 
+  @IsOptional()
   @IsString()
-  lastname?: string;
+  patientLastname?: string;
 
+  @IsOptional()
   @IsDateString()
   birthdate?: Date;
 
+  @IsOptional()
   @IsNumber()
   dni?: number; 
 
+  @IsOptional()
   @IsNumber()
   userId?: number;
 
+  @IsOptional()
   @IsNumber()
   planId?: number;
 }

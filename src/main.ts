@@ -14,10 +14,10 @@ async function bootstrap() {
   );
 
   app.enableCors({
-    origin: 'http://localhost:5173',
+    origin: 'http://127.0.0.1:5173',
     credentials: true,
   });
-     
+
   const config = new DocumentBuilder()
     .setTitle('Clinica Online')
     .setDescription('Backend Clinica')
